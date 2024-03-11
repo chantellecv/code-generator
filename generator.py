@@ -1,12 +1,10 @@
 import streamlit as st
 
 # Title of the Streamlit app
-st.title('Sum of Two Integers')
+st.title('Sum of Two Integers Calculator')
 
-# Input for first integer
+# Input fields for the user to enter two integers
 num1 = st.number_input('Enter the first integer:')
-
-# Input for second integer
 num2 = st.number_input('Enter the second integer:')
 
 # Calculate the sum of the two integers
