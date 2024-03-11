@@ -1,21 +1,19 @@
-# Import required library
 import streamlit as st
+from chatgpt import ChatGPT
 
-# Function to calculate the sum of two integers
-def sum_of_integers(num1, num2):
-    return num1 + num2
+# Initialize the ChatGPT model with GPT-3
+chatbot = ChatGPT(engine="gpt3")
 
-# Streamlit app
-def main():
-    st.title('Sum of Two Integers Calculator')
+# Streamlit app title and description
+st.title("Chatbot Application")
+st.write("Welcome to the conversational chatbot. Start typing to chat with the chatbot!")
 
-    # User input for the two integers
-    num1 = st.number_input('Enter the first integer:')
-    num2 = st.number_input('Enter the second integer:')
+# User input text box
+user_input = st.text_input("You:", "")
 
-    # Calculate and display the sum
-    result = sum_of_integers(num1, num2)
-    st.write('The sum of the two integers is: ', result)
-
-if __name__ == '__main__':
-    main()
+# Chatbot response
+if st.button("Send"):
+    if user_input:
+        # Generate a response from the chatbot
+        response = chatbot.get_response(user_input)
+        st.text_area("Chatbot:", value=response)
