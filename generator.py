@@ -1,19 +1,28 @@
+# Import necessary libraries
 import streamlit as st
-from chatgpt import ChatGPT
+from chatterbot import ChatBot
+from chatterbot.trainers import ChatterBotCorpusTrainer
 
-# Initialize the ChatGPT model with GPT-3
-chatbot = ChatGPT(engine="gpt3")
+# Create a chatbot instance
+chatbot = ChatBot('MyChatBot')
 
-# Streamlit app title and description
-st.title("Chatbot Application")
-st.write("Welcome to the conversational chatbot. Start typing to chat with the chatbot!")
+# Create a new trainer for the chatbot
+trainer = ChatterBotCorpusTrainer(chatbot)
 
-# User input text box
-user_input = st.text_input("You:", "")
+# Train the chatbot on the English language
+trainer.train("chatterbot.corpus.english")
 
-# Chatbot response
-if st.button("Send"):
-    if user_input:
-        # Generate a response from the chatbot
-        response = chatbot.get_response(user_input)
-        st.text_area("Chatbot:", value=response)
+# Function to get response from the chatbot
+def get_response(message):
+    return chatbot.get_response(message)
+
+# Streamlit App
+st.title('Python Chatbot')
+
+# User input textbox
+user_input = st.text_input('You:')
+
+# Bot response
+if st.button('Send'):
+    bot_response = get_response(user_input)
+    st.write('Bot:', bot_response)
