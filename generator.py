@@ -1,1 +1,1 @@
-print('Generated code based on prompt: find the sum between two numbers')
+print('Generated code based on prompt: code to derive sum from two integers')
