@@ -1,37 +1,37 @@
 import streamlit as st
 
-# Dictionary of available items and their prices
+# Define the menu items with prices
 menu = {
     'Burger': 5.99,
-    'Fries': 2.49,
-    'Salad': 4.99,
-    'Drink': 1.99
+    'Pizza': 8.99,
+    'Salad': 6.99,
+    'Fries': 2.99
 }
 
 st.title('Self-Ordering Kiosk App')
 
-# Display the menu
+# Display the menu to the user
 st.write('### Menu:')
 for item, price in menu.items():
     st.write(f'- {item}: ${price}')
 
-# Initialize order
-order = {}
+# Allow users to select items to add to their order
+user_order = []
+total_price = 0.0
 
-# Allow users to select items and quantities
-st.write('### Select Items:')
-for item in menu.keys():
-    quantity = st.number_input(f'Quantity of {item}', min_value=0, step=1)
-    if quantity > 0:
-        order[item] = quantity
+st.write('\n### Select Items to Add to Your Order:')
+for item in menu:
+    option = st.checkbox(item)
+    if option:
+        user_order.append(item)
+        total_price += menu[item]
 
-# Calculate and display total cost
-total_cost = sum([menu[item] * quantity for item, quantity in order.items()])
-st.write('### Total Cost:')
-st.write(f'${total_cost:.2f}')
+st.write('\n### Your Order:')
+for item in user_order:
+    st.write(f'- {item}')
 
-# Display order summary
-if order:
-    st.write('### Order Summary:')
-    for item, quantity in order.items():
-        st.write(f'- {item}: {quantity}')
+st.write(f'\n**Total Price:** ${total_price}')
+
+# Allow users to place the order
+if st.button('Place Order'):
+    st.success('Your order has been placed!')
