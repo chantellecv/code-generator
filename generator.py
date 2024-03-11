@@ -1,19 +1,20 @@
-Generated code based on prompt: Sure! Here is the Python code for a Streamlit app that calculates the sum of two integers:
+Here is a sample code to determine the sum of two integers using a Streamlit app:
 
 ```python
 import streamlit as st
 
-st.title('Sum of Two Integers Calculator')
+def sum_of_integers(num1, num2):
+    return num1 + num2
 
-# Input fields for the user to input the integers
-num1 = st.number_input('Enter the first integer:', value=0)
-num2 = st.number_input('Enter the second integer:', value=0)
+# Streamlit app layout
+st.title('Sum of Two Integers')
+st.write('Enter two integers to calculate their sum:')
+num1 = st.number_input('Enter the first integer:', step=1)
+num2 = st.number_input('Enter the second integer:', step=1)
 
-# Calculate the sum of the two integers
-result = num1 + num2
-
-# Display the result to the user
-st.write(f'The sum of {num1} and {num2} is: {result}')
+if st.button('Calculate Sum'):
+    sum_result = sum_of_integers(num1, num2)
+    st.write(f'The sum of {num1} and {num2} is: {sum_result}')
 ```
 
-You can copy and paste this code into a Python script and run it using Streamlit to create a web app that calculates the sum of two integers.')
+You can copy and paste this code into a Python script, save it as `sum_of_integers_app.py`, and run it using Streamlit to create an app where you can calculate the sum of two integers.
