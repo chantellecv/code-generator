@@ -1,15 +1,16 @@
-python
 import streamlit as st
 
-# Page title
-st.title('Sum of Two Integers')
+# Title of the Streamlit app
+st.title("Sum of Two Integers")
 
-# User input for two integers
-num1 = st.number_input('Enter the first integer:', value=0)
-num2 = st.number_input('Enter the second integer:', value=0)
+# Input for the first integer
+num1 = st.number_input("Enter the first integer:")
 
-# Calculate the sum
-sum = num1 + num2
+# Input for the second integer
+num2 = st.number_input("Enter the second integer:")
 
-# Display the sum
-st.write(f'The sum of {num1} and {num2} is: {sum}')
+# Calculate the sum of the two integers
+sum_result = num1 + num2
+
+# Display the result
+st.write(f"The sum of {num1} and {num2} is: {sum_result}")
