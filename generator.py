@@ -1,22 +1,11 @@
 import streamlit as st
 
-def sum_of_even_numbers(lst):
-    result = 0
-    for num in lst:
-        if num % 2 == 0:
-            result += num
-    return result
+def sum_of_integers(num1, num2):
+    return num1 + num2
 
-def main():
-    st.title('Sum of Even Numbers App')
-    
-    input_numbers = st.text_input('Enter a list of integers separated by commas (e.g., 1,2,3,4):')
-    
-    if input_numbers:
-        numbers_list = [int(num) for num in input_numbers.split(',')]
-        result = sum_of_even_numbers(numbers_list)
-        st.write('List of numbers:', numbers_list)
-        st.write('Sum of even numbers:', result)
+st.title("Sum of Two Integers")
+num1 = st.number_input("Enter the first integer:")
+num2 = st.number_input("Enter the second integer:")
 
-if __name__ == '__main__':
-    main()
+result = sum_of_integers(num1, num2)
+st.write(f"The sum of {num1} and {num2} is: {result}")
