@@ -1,14 +1,15 @@
+# Import necessary libraries
 import streamlit as st
 
-def is_palindrome(s):
-    s = s.lower().replace(" ", "")
-    return s == s[::-1]
+# Title of the web app
+st.title("Integer Difference Calculator")
 
-st.title("Palindrome Checker")
+# Input integer values from the user
+num1 = st.number_input("Enter the first integer:")
+num2 = st.number_input("Enter the second integer:")
 
-user_input = st.text_input("Enter a string:")
-if st.button("Check"):
-    if is_palindrome(user_input):
-        st.write(f"'{user_input}' is a palindrome!")
-    else:
-        st.write(f"'{user_input}' is not a palindrome.")
+# Calculate the difference between the two integers
+difference = num1 - num2
+
+# Display the difference to the user
+st.write(f"The difference between {num1} and {num2} is: {difference}")
