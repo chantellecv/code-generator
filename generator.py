@@ -1,16 +1,14 @@
 import streamlit as st
 
-# Title of the Streamlit app
-st.title("Sum of Two Integers")
+def is_palindrome(s):
+    s = s.lower().replace(" ", "")
+    return s == s[::-1]
 
-# Input for the first integer
-num1 = st.number_input("Enter the first integer:")
+st.title("Palindrome Checker")
 
-# Input for the second integer
-num2 = st.number_input("Enter the second integer:")
-
-# Calculate the sum of the two integers
-sum_result = num1 + num2
-
-# Display the result
-st.write(f"The sum of {num1} and {num2} is: {sum_result}")
+user_input = st.text_input("Enter a string:")
+if st.button("Check"):
+    if is_palindrome(user_input):
+        st.write(f"'{user_input}' is a palindrome!")
+    else:
+        st.write(f"'{user_input}' is not a palindrome.")
