@@ -1,13 +1,21 @@
+# Import required library
 import streamlit as st
 
+# Function to calculate the sum of two integers
 def sum_of_integers(num1, num2):
     return num1 + num2
 
-st.title('Sum of Two Integers Calculator')
+# Streamlit app
+def main():
+    st.title('Sum of Two Integers Calculator')
 
-num1 = st.number_input('Enter the first integer:', step=1)
-num2 = st.number_input('Enter the second integer:', step=1)
+    # User input for the two integers
+    num1 = st.number_input('Enter the first integer:')
+    num2 = st.number_input('Enter the second integer:')
 
-result = sum_of_integers(num1, num2)
+    # Calculate and display the sum
+    result = sum_of_integers(num1, num2)
+    st.write('The sum of the two integers is: ', result)
 
-st.write(f'The sum of {num1} and {num2} is: {result}')
+if __name__ == '__main__':
+    main()
