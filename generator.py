@@ -1,12 +1,18 @@
 import streamlit as st
 
-# Title of the Streamlit app
-st.title("Character Counter App")
+def is_palindrome(s):
+    s = s.lower().replace(" ", "")  # Convert string to lowercase and remove spaces
+    return s == s[::-1]
 
-# Text input for user to enter a string
-user_input = st.text_input("Enter a string:")
+def main():
+    st.title("Palindrome Checker")
+    user_input = st.text_input("Enter a string:")
+    
+    if st.button("Check if Palindrome"):
+        if is_palindrome(user_input):
+            st.write(f"'{user_input}' is a palindrome!")
+        else:
+            st.write(f"'{user_input}' is not a palindrome.")
 
-# Display the number of characters in the string entered by the user
-if user_input:
-    num_characters = len(user_input)
-    st.write(f"The number of characters in the string: {num_characters}")
+if __name__ == "__main__":
+    main()
