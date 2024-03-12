@@ -1,55 +1,31 @@
 import streamlit as st
-import random
 
-def generate_story(theme, character):
+# Placeholder for the function to interact with the model
+def generate_essay(topic, word_count=500):
     """
-    Generates a short story based on the specified theme and character.
-    This is a simple implementation and can be expanded with more complex logic or AI models.
+    Function to generate an essay based on a given topic.
+    This should be replaced with actual calls to a text generation model or API.
     """
-    beginnings = [
-        f"One day, {character} woke up to find out that everything had changed overnight.",
-        f"In a world where {theme} dominated, {character} found themselves at a crossroads.",
-        f"Never had {character} imagined they would be part of a {theme}, yet here they were."
-    ]
+    # Assume this returns a 500-word essay on the specified topic
+    generated_text = f"This is a generated essay on the topic '{topic}' with approximately {word_count} words."
+    return generated_text
 
-    middles = [
-        "It wasn't long before things started to get interesting.",
-        "As the journey continued, challenges and allies appeared in the most unexpected places.",
-        "With a heavy heart and a clear mind, the quest for a solution had truly begun."
-    ]
+# Streamlit app interface
+st.title("500-Word Essay Generator")
 
-    ends = [
-        f"In the end, it all boiled down to what {character} truly believed in.",
-        "And so, with a final push, a new chapter began, ripe with possibilities.",
-        "The adventure may have concluded, but the memories and lessons lingered on."
-    ]
+# User input for the essay topic
+topic = st.text_input("Enter the essay topic:", "")
 
-    # Randomly select parts of the story
-    beginning = random.choice(beginnings)
-    middle = random.choice(middles)
-    end = random.choice(ends)
-
-    # Combine and return the story
-    story = f"{beginning} {middle} {end}"
-    return story
-
-def main():
-    st.title("Creative Short Story Generator")
-
-    # User inputs
-    theme = st.text_input("Enter a theme for the story (e.g., adventure, mystery):")
-    character = st.text_input("Enter the main character's name:")
-
-    # Story generation button
-    generate = st.button("Generate Story")
-
-    if generate and theme and character:
-        # Generate and display the story
-        story = generate_story(theme, character)
-        st.subheader("Here's your story:")
-        st.write(story)
-    elif generate:
-        st.error("Please enter both a theme and a character's name to generate a story.")
+# Button to trigger essay generation
+if st.button("Generate Essay"):
+    if topic:
+        # Generating essay
+        essay = generate_essay(topic)
+        
+        # Displaying the generated essay
+        st.write(essay)
+    else:
+        st.error("Please enter a topic to generate an essay.")
 
 if __name__ == "__main__":
-    main()
+    st.mainloop()
