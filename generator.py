@@ -1,46 +1,30 @@
 import streamlit as st
-from time import sleep
+import time
 
-# ASCII Art options
-ascii_options = {
-    "Rocket": """
-       ^
-      /^\\
-      |-|
-      | |
-      |N|
-      |A|
-      |S|
-      |A|
-     /| |\\
-    / | | \\
-   |  | |  |
-    `-"""-`
-    """,
-    "Robot": """
-     /\\_/\\  
-    ( o.o ) 
-     > ^ <
-    """,
-    "Cat": """
-     /\_/\  
-    ( o.o ) 
-     > ^ <
+# ASCII Art Frames
+frames = [
     """
-}
-
-def animate_ascii_art(art):
-    # The number of spaces increases to simulate movement
-    for i in range(20):
-        st.write(f"{' ' * i}{art}")
-        sleep(0.1)
-        st.experimental_rerun()
+    Frame 1
+    Your ASCII Art Here
+    """,
+    """
+    Frame 2
+    Your ASCII Art Here
+    """,
+    """
+    Frame 3
+    Your ASCII Art Here
+    """,
+    # Add more frames as needed
+]
 
 st.title('Simple ASCII Art Animation')
 
-# Dropdown for ASCII art selection
-selected_art = st.selectbox('Choose an ASCII character', options=list(ascii_options.keys()))
-
-# Start animation button
-if st.button('Start Animation'):
-    animate_ascii_art(ascii_options[selected_art])
+# Loop to animate
+while True:
+    for frame in frames:
+        # Clear previous frame
+        st.empty()
+        st.code(frame, language='')
+        # Adjust time.sleep to control the speed of your animation
+        time.sleep(0.5)
