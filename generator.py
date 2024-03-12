@@ -1,47 +1,33 @@
 import streamlit as st
-import random
+from textblob import TextBlob
 
-# Function to get a random French vocabulary question
-def get_vocabulary_question():
-    question_set = [
-        {"question": "What is the French word for 'Apple'?", "options": ['Pomme', 'Banane', 'Orange'], "answer": "Pomme"},
-        {"question": "What is the French word for 'Book'?", "options": ['Livre', 'Stylo', 'Table'], "answer": "Livre"},
-        {"question": "What is the French word for 'Car'?", "options": ['Chaise', 'Voiture', 'Fenêtre'], "answer": "Voiture"},
-    ]
-    return random.choice(question_set)
+# Function to analyze sentiment
+def analyze_sentiment(email_text: str):
+    analysis = TextBlob(email_text)
+    sentiment_polarity = analysis.sentiment.polarity
+    sentiment_subjectivity = analysis.sentiment.subjectivity
 
-# Basic layout and title of the app
-st.title('Learn French with Fun!')
+    if sentiment_polarity > 0:
+        sentiment_label = 'Positive'
+    elif sentiment_polarity == 0:
+        sentiment_label = 'Neutral'
+    else:
+        sentiment_label = 'Negative'
 
-# User's name input
-name = st.text_input('What is your name?')
+    return sentiment_label, sentiment_polarity, sentiment_subjectivity
 
-if name:
-    # Welcome message
-    st.write(f"Bonjour {name}! Ready to learn French? Let's start!")
+# Streamlit app layout
+st.title('Email Sentiment Analysis App')
 
-    # Selecting the type of exercise
-    exercise = st.selectbox('Choose an exercise type:', ['Choose', 'Vocabulary', 'Grammar', 'Games'])
+# Textarea for user input
+email_input = st.text_area("Paste your email text here:")
 
-    if exercise == 'Vocabulary':
-        st.subheader('Vocabulary Exercise')
-        question = get_vocabulary_question()
-        answer = st.radio(question['question'], question['options'])
-
-        if st.button('Submit'):
-            if answer == question['answer']:
-                st.success('Correct! 🎉')
-            else:
-                st.error('Oops! The correct answer is: ' + question['answer'])
-
-    elif exercise == 'Grammar':
-        st.subheader('Grammar exercises coming soon!')
-        st.write("We're working on adding more content. Stay tuned!")
-
-    elif exercise == 'Games':
-        st.subheader('Language games coming soon!')
-        st.write("Fun games are on the way. Check back later!")
-
-# Footer
-st.markdown('---')
-st.write('Merci for using our app to learn French!')
+# Analyze button
+if st.button('Analyze'):
+    if email_input:
+        sentiment_label, sentiment_polarity, sentiment_subjectivity = analyze_sentiment(email_input)
+        st.success(f'Sentiment: {sentiment_label}')
+        st.info(f'Polarity: {sentiment_polarity:.2f}')
+        st.info(f'Subjectivity: {sentiment_subjectivity:.2f}')
+    else:
+        st.error('Please paste some text to analyze.')
