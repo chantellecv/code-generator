@@ -1,50 +1,59 @@
 import streamlit as st
-import numpy as np
-import pybullet as p
-import pybullet_data
-import time
+import gzip
+import shutil
 
-# Initialize PyBullet and setup environment
-def init_simulation():
-    physicsClient = p.connect(p.DIRECT)  # Non-graphical version
-    p.setGravity(0, 0, -10)
-    p.setAdditionalSearchPath(pybullet_data.getDataPath())  # To load plane URDF
-    planeId = p.loadURDF("plane.urdf")
-    return physicsClient
+# Function to read a file
+def read_file(file_path):
+    with open(file_path, "r") as file:
+        content = file.read()
+    return content
 
-# Load a simple robot model (e.g., a wheeled robot)
-def load_robot(physicsClient):
-    start_position = [0, 0, 0.1]
-    start_orientation = p.getQuaternionFromEuler([0, 0, 0])
-    robot_id = p.loadURDF("r2d2.urdf", start_position, start_orientation)  # Example robot
-    return robot_id
+# Function to write to a file
+def write_file(file_path, content):
+    with open(file_path, "w") as file:
+        file.write(content)
+    return f"Content written to {file_path}"
 
-# Simulate and update robot position based on simple control inputs (forward and turn rates)
-def simulate_robot(robot_id, forward, turn):
-    # For simplicity, we'll directly set the velocity. In a real sim, you would use control commands.
-    wheel_speed = 5.0 * forward
-    turn_speed = 1.0 * turn
-    p.setJointMotorControl2(robot_id, 0, p.VELOCITY_CONTROL, targetVelocity=wheel_speed + turn_speed)
-    p.setJointMotorControl2(robot_id, 1, p.VELOCITY_CONTROL, targetVelocity=wheel_speed - turn_speed)
-    for _ in range(100):
-        p.stepSimulation()
-        time.sleep(1./240.)
+# Function to compress a file
+def compress_file(input_file_path, output_file_path):
+    with open(input_file_path, "rb") as f_in:
+        with gzip.open(output_file_path, "wb") as f_out:
+            shutil.copyfileobj(f_in, f_out)
+    return f"File compressed as {output_file_path}"
 
-def main():
-    st.title('Basic Robotics Simulation Environment')
-    
-    if 'physicsClient' not in st.session_state:
-        st.session_state.physicsClient = init_simulation()
-    
-    if 'robot_id' not in st.session_state:
-        st.session_state.robot_id = load_robot(st.session_state.physicsClient)
-    
-    forward = st.slider('Forward Speed', -5, 5, 0)
-    turn = st.slider('Turn Rate', -5, 5, 0)
-    
-    if st.button('Simulate Step'):
-        simulate_robot(st.session_state.robot_id, forward, turn)
-        st.write('Simulation step completed')
+# Function to decompress a gzip file
+def decompress_file(input_file_path, output_file_path):
+    with gzip.open(input_file_path, "rb") as f_in:
+        with open(output_file_path, "wb") as f_out:
+            shutil.copyfileobj(f_in, f_out)
+    return f"File decompressed as {output_file_path}"
 
-if __name__ == '__main__':
-    main()
+# Streamlit UI
+st.title("File Operations App")
+
+# Sidebar options
+operation = st.sidebar.selectbox("Choose an operation:", ["Read", "Write", "Compress", "Decompress"])
+
+if operation == "Read":
+    uploaded_file = st.file_uploader("Choose a file to read", type=['txt', 'gz'])
+    if uploaded_file is not None:
+        file_content = read_file(uploaded_file)
+        st.write(file_content)
+elif operation == "Write":
+    content_to_write = st.text_area("Enter content to write to file:")
+    file_name_to_write = st.text_input("Enter the name of the new file (with extension):")
+    if st.button("Write to File"):
+        write_message = write_file(file_name_to_write, content_to_write)
+        st.success(write_message)
+elif operation == "Compress":
+    file_to_compress = st.file_uploader("Choose a file to compress", type=['txt'])
+    output_file_name = st.text_input("Enter the name of the compressed file (with .gz extension):")
+    if st.button("Compress File"):
+        compress_message = compress_file(file_to_compress, output_file_name)
+        st.success(compress_message)
+elif operation == "Decompress":
+    file_to_decompress = st.file_uploader("Choose a .gz file to decompress", type=['gz'])
+    decompressed_file_name = st.text_input("Enter the name for the decompressed file:")
+    if st.button("Decompress File"):
+        decompress_message = decompress_file(file_to_decompress, decompressed_file_name)
+        st.success(decompress_message)
