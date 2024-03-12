@@ -1,45 +1,25 @@
 import streamlit as st
-import pandas as pd
+import random
 
-# Data of Recipes with Ingredients and Nutritional Information
-recipes_data = {
-    'Recipe': ['Grilled Salmon', 'Chicken Stir-Fry', 'Vegetarian Chili', 'Quinoa Salad'],
-    'Ingredients': ['salmon, lemon, garlic, olive oil', 'chicken, vegetables, soy sauce, ginger', 'beans, tomatoes, onions, bell peppers', 'quinoa, cucumber, tomatoes, feta cheese'],
-    'Calories': [300, 400, 250, 200],
-    'Protein (g)': [25, 30, 15, 10],
-    'Carbs (g)': [10, 20, 30, 15],
-}
+# Set title and description for the app
+st.title('Language Learning App')
+st.write('Welcome to the Language Learning App! Improve your language skills with interactive exercises, quizzes, and language games.')
 
-recipes_df = pd.DataFrame(recipes_data)
+# Select the language to learn
+language_options = ['English', 'Spanish', 'French', 'German', 'Italian']
+selected_language = st.selectbox('Select the language you want to learn:', language_options)
 
-# Sidebar - User Input
-st.sidebar.title('Recipe Suggestion App')
-diet_preference = st.sidebar.selectbox('Select Dietary Preference', ['Any', 'Vegetarian', 'Non-Vegetarian'])
-available_ingredients = st.sidebar.text_input('Enter Available Ingredients (comma separated)', '')
-max_calories = st.sidebar.number_input('Enter Maximum Calories', min_value=0)
-min_protein = st.sidebar.number_input('Enter Minimum Protein (g)', min_value=0)
-min_carbs = st.sidebar.number_input('Enter Minimum Carbs (g)', min_value=0)
+# Interactive exercises
+if st.button('Start Interactive Exercises'):
+    st.write(f'Welcome to the {selected_language} Interactive Exercises!')
+    # You can add interactive exercises code here
 
-# Filter Recipes based on User Input
-filtered_recipes = recipes_df.copy()
+# Quiz section
+if st.button('Take a Quiz'):
+    st.write(f'Challenge Yourself with a {selected_language} Quiz!')
+    # You can add quiz code here
 
-if diet_preference != 'Any':
-    if diet_preference == 'Vegetarian':
-        filtered_recipes = filtered_recipes[filtered_recipes['Ingredients'].str.contains('chicken') == False]
-    else:
-        filtered_recipes = filtered_recipes[filtered_recipes['Ingredients'].str.contains('chicken')]
-
-if available_ingredients:
-    for ingredient in available_ingredients.split(','):
-        filtered_recipes = filtered_recipes[filtered_recipes['Ingredients'].str.contains(ingredient.strip())]
-
-filtered_recipes = filtered_recipes[(filtered_recipes['Calories'] <= max_calories) & 
-                                    (filtered_recipes['Protein (g)'] >= min_protein) & 
-                                    (filtered_recipes['Carbs (g)'] >= min_carbs)]
-
-# Display Suggested Recipes
-st.title('Suggested Recipes')
-if filtered_recipes.empty:
-    st.warning('No recipes found matching the criteria. Please adjust your preferences.')
-else:
-    st.table(filtered_recipes[['Recipe', 'Ingredients', 'Calories', 'Protein (g)', 'Carbs (g)']])
+# Language game
+if st.button('Play a Language Game'):
+    st.write(f'Play a Fun Language Game to Practice {selected_language}!')
+    # You can add language game code here
