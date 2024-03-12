@@ -1,31 +1,37 @@
 import streamlit as st
+import openai
 
-# Placeholder for the function to interact with the model
-def generate_essay(topic, word_count=500):
-    """
-    Function to generate an essay based on a given topic.
-    This should be replaced with actual calls to a text generation model or API.
-    """
-    # Assume this returns a 500-word essay on the specified topic
-    generated_text = f"This is a generated essay on the topic '{topic}' with approximately {word_count} words."
-    return generated_text
+# Replace "your_api_key_here" with your actual OpenAI API key
+openai.api_key = 'your_api_key_here'
 
-# Streamlit app interface
-st.title("500-Word Essay Generator")
+# Streamlit app title
+st.title('500-Word Essay Generator')
 
-# User input for the essay topic
-topic = st.text_input("Enter the essay topic:", "")
+# Input for the essay topic
+topic = st.text_input('Enter the essay topic:', '')
 
-# Button to trigger essay generation
-if st.button("Generate Essay"):
+# Function to generate essay
+def generate_essay(topic):
+    try:
+        # Adjust parameters as necessary
+        response = openai.Completion.create(
+          engine="text-davinci-003",  # You can choose a different model here
+          prompt=f"Write a 500-word essay about {topic}.",
+          temperature=0.7,
+          max_tokens=4000,  # Adjust based on the model's limits and desired output length
+          top_p=1.0,
+          frequency_penalty=0.0,
+          presence_penalty=0.0
+        )
+        return response.choices[0].text.strip()
+    except Exception as e:
+        return f"An error occurred: {e}"
+
+# Button to generate essay
+if st.button('Generate Essay'):
     if topic:
-        # Generating essay
-        essay = generate_essay(topic)
-        
-        # Displaying the generated essay
-        st.write(essay)
+        with st.spinner('Generating essay...'):
+            essay = generate_essay(topic)
+            st.text_area('Generated Essay:', essay, height=250)
     else:
-        st.error("Please enter a topic to generate an essay.")
-
-if __name__ == "__main__":
-    st.mainloop()
+        st.error('Please enter a topic to generate the essay.')
