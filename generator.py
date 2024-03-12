@@ -1,37 +1,47 @@
 import streamlit as st
-import time
+import random
 
-# Function to draw the bouncing ball
-def draw_ball(position):
-    width = 20  # Width of the animation area
-    animation_area = [' '] * width  # Initialize animation area with blank spaces
-    animation_area[position] = 'O'  # Place the ball at the current position
-    return ''.join(animation_area)  # Convert the list to a string
+# Function to get a random French vocabulary question
+def get_vocabulary_question():
+    question_set = [
+        {"question": "What is the French word for 'Apple'?", "options": ['Pomme', 'Banane', 'Orange'], "answer": "Pomme"},
+        {"question": "What is the French word for 'Book'?", "options": ['Livre', 'Stylo', 'Table'], "answer": "Livre"},
+        {"question": "What is the French word for 'Car'?", "options": ['Chaise', 'Voiture', 'Fenêtre'], "answer": "Voiture"},
+    ]
+    return random.choice(question_set)
 
-# Streamlit app
-def main():
-    st.title('Bouncing Ball ASCII Animation')
+# Basic layout and title of the app
+st.title('Learn French with Fun!')
 
-    position = 0  # Initial position of the ball
-    direction = 1  # Initial direction of the ball movement (1 for right, -1 for left)
-    animation_speed = 0.1  # Controls the speed of the animation
+# User's name input
+name = st.text_input('What is your name?')
 
-    # Placeholder for the animation
-    animation_placeholder = st.empty()
+if name:
+    # Welcome message
+    st.write(f"Bonjour {name}! Ready to learn French? Let's start!")
 
-    while True:
-        # Display the current frame
-        animation_placeholder.text(draw_ball(position))
+    # Selecting the type of exercise
+    exercise = st.selectbox('Choose an exercise type:', ['Choose', 'Vocabulary', 'Grammar', 'Games'])
 
-        # Update the position for the next frame
-        position += direction
+    if exercise == 'Vocabulary':
+        st.subheader('Vocabulary Exercise')
+        question = get_vocabulary_question()
+        answer = st.radio(question['question'], question['options'])
 
-        # Change direction if we hit a wall
-        if position == 0 or position == 19:
-            direction *= -1
+        if st.button('Submit'):
+            if answer == question['answer']:
+                st.success('Correct! 🎉')
+            else:
+                st.error('Oops! The correct answer is: ' + question['answer'])
 
-        # Control the speed of the animation
-        time.sleep(animation_speed)
+    elif exercise == 'Grammar':
+        st.subheader('Grammar exercises coming soon!')
+        st.write("We're working on adding more content. Stay tuned!")
 
-if __name__ == '__main__':
-    main()
+    elif exercise == 'Games':
+        st.subheader('Language games coming soon!')
+        st.write("Fun games are on the way. Check back later!")
+
+# Footer
+st.markdown('---')
+st.write('Merci for using our app to learn French!')
