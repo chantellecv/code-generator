@@ -1,36 +1,44 @@
 import streamlit as st
-import openai
+import numpy as np
+import matplotlib.pyplot as plt
+from noise import pnoise2
 
-# Initialize OpenAI client with your API key
-openai.api_key = 'your_api_key_here'
+def generate_perlin_noise(width, height, scale, octaves):
+    """
+    Generate a 2D numpy array of perlin noise.
+    """
+    noise = np.zeros((width, height))
+    for i in range(width):
+        for j in range(height):
+            noise[i][j] = pnoise2(i / scale, 
+                                  j / scale, 
+                                  octaves=octaves)
+    return noise
 
-def generate_essay(prompt, word_count=500):
-    response = openai.Completion.create(
-        engine="text-davinci-003",  # As of my last update, text-davinci-003 is a powerful model. Update if needed
-        prompt=prompt,
-        max_tokens=word_count*0.8,  # Roughly estimate the tokens to match a 500-word essay. May need adjustment.
-        temperature=0.7,  # Adjusts randomness. Closer to 1 makes it more diverse; closer to 0 more deterministic.
-        top_p=1,
-        frequency_penalty=0,
-        presence_penalty=0,
-        stop=["\n\n"]  # Optional: Defines stop sequence. Adjust based on your needs.
-    )
-    return response.choices[0].text.strip()
+def plot_noise(noise_map, colormap):
+    """
+    Plot the generated perlin noise using matplotlib.
+    """
+    plt.figure(figsize=(10, 10))
+    plt.imshow(noise_map, cmap=colormap)
+    plt.axis('off')
+    st.pyplot(plt)
 
 def main():
-    st.title("500-Word Essay Generator")
+    st.title("Abstract Art Generator")
+    
+    with st.sidebar:
+        width = st.number_input("Image width", min_value=100, max_value=1000, value=500)
+        height = st.number_input("Image height", min_value=100, max_value=1000, value=500)
+        scale = st.slider("Scale", min_value=10, max_value=100, value=50)
+        octaves = st.slider("Complexity (Octaves)", min_value=1, max_value=10, value=5)
+        colormap = st.selectbox("Color map", options=plt.colormaps(), index=plt.colormaps().index('magma'))
 
-    # User input for essay topic
-    topic = st.text_input("Enter the essay topic:", "")
-
-    if st.button("Generate Essay"):
-        if topic.strip() != "":
-            with st.spinner('Generating...'):
-                essay = generate_essay(topic)
-                st.subheader("Generated Essay:")
-                st.write(essay)
-        else:
-            st.error("Please enter a valid topic.")
+    st.subheader("Generated Art")
+    
+    if st.button("Generate"):
+        noise_map = generate_perlin_noise(width, height, scale, octaves)
+        plot_noise(noise_map, colormap)
 
 if __name__ == "__main__":
     main()
