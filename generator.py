@@ -1,25 +1,25 @@
 import streamlit as st
 import random
 
-# Set title and description for the app
-st.title('Language Learning App')
-st.write('Welcome to the Language Learning App! Improve your language skills with interactive exercises, quizzes, and language games.')
+# Set the title of the app
+st.title("Language Learning App")
 
-# Select the language to learn
-language_options = ['English', 'Spanish', 'French', 'German', 'Italian']
-selected_language = st.selectbox('Select the language you want to learn:', language_options)
+# Define a list of languages for the user to choose from
+languages = ["Spanish", "French", "German", "Italian"]
 
-# Interactive exercises
-if st.button('Start Interactive Exercises'):
-    st.write(f'Welcome to the {selected_language} Interactive Exercises!')
-    # You can add interactive exercises code here
+# Create a selectbox for the user to choose the language
+selected_language = st.selectbox("Select a language to learn", languages)
 
-# Quiz section
-if st.button('Take a Quiz'):
-    st.write(f'Challenge Yourself with a {selected_language} Quiz!')
-    # You can add quiz code here
-
-# Language game
-if st.button('Play a Language Game'):
-    st.write(f'Play a Fun Language Game to Practice {selected_language}!')
-    # You can add language game code here
+# Language-specific interactive exercises, quizzes, and games
+if selected_language == "Spanish":
+    st.write("Hola! Welcome to the Spanish Language Learning Section")
+    # Add interactive exercises, quizzes, and games for learning Spanish here
+elif selected_language == "French":
+    st.write("Bonjour! Welcome to the French Language Learning Section")
+    # Add interactive exercises, quizzes, and games for learning French here
+elif selected_language == "German":
+    st.write("Hallo! Welcome to the German Language Learning Section")
+    # Add interactive exercises, quizzes, and games for learning German here
+elif selected_language == "Italian":
+    st.write("Ciao! Welcome to the Italian Language Learning Section")
+    # Add interactive exercises, quizzes, and games for learning Italian here
