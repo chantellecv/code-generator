@@ -1,28 +1,19 @@
-# Import necessary libraries
 import streamlit as st
-from chatterbot import ChatBot
-from chatterbot.trainers import ChatterBotCorpusTrainer
 
-# Create a chatbot instance
-chatbot = ChatBot('MyChatBot')
+# Title
+st.title('Recipe Suggestion App')
 
-# Create a new trainer for the chatbot
-trainer = ChatterBotCorpusTrainer(chatbot)
+# Collect user inputs
+dietary_preferences = st.selectbox('Select your dietary preferences:', ['Vegetarian', 'Vegan', 'Keto', 'Gluten-free'])
+available_ingredients = st.text_input('Enter the available ingredients (comma-separated):')
+calories = st.number_input('Enter maximum calories:', min_value=0, step=100)
+protein = st.number_input('Enter minimum protein (g):', min_value=0, step=1)
+fat = st.number_input('Enter maximum fat (g):', min_value=0, step=1)
+carbohydrates = st.number_input('Enter maximum carbohydrates (g):', min_value=0, step=1)
 
-# Train the chatbot on the English language
-trainer.train("chatterbot.corpus.english")
-
-# Function to get response from the chatbot
-def get_response(message):
-    return chatbot.get_response(message)
-
-# Streamlit App
-st.title('Python Chatbot')
-
-# User input textbox
-user_input = st.text_input('You:')
-
-# Bot response
-if st.button('Send'):
-    bot_response = get_response(user_input)
-    st.write('Bot:', bot_response)
+# Button to generate recipe suggestions
+if st.button('Generate Recipe Suggestions'):
+    st.write('Recipes based on your criteria:')
+    # Add code here to suggest recipes based on user's inputs
+    st.write('Recipe 1: Grilled Tofu Salad')
+    st.write('Recipe 2: Quinoa Stuffed Bell Peppers')
