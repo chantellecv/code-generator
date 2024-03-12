@@ -1,51 +1,46 @@
 import streamlit as st
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
+from time import sleep
 
-# Set the title of the app
-st.title('Basic Data Analysis App')
+# ASCII Art options
+ascii_options = {
+    "Rocket": """
+       ^
+      /^\\
+      |-|
+      | |
+      |N|
+      |A|
+      |S|
+      |A|
+     /| |\\
+    / | | \\
+   |  | |  |
+    `-"""-`
+    """,
+    "Robot": """
+     /\\_/\\  
+    ( o.o ) 
+     > ^ <
+    """,
+    "Cat": """
+     /\_/\  
+    ( o.o ) 
+     > ^ <
+    """
+}
 
-# Allow file upload
-uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
+def animate_ascii_art(art):
+    # The number of spaces increases to simulate movement
+    for i in range(20):
+        st.write(f"{' ' * i}{art}")
+        sleep(0.1)
+        st.experimental_rerun()
 
-if uploaded_file is not None:
-    # Load the dataset
-    df = pd.read_csv(uploaded_file)
-    
-    # Display dataset structure
-    if st.checkbox('Show dataset structure'):
-        st.write(df.head())
-    
-    # Calculate summary statistics
-    if st.checkbox('Show summary statistics'):
-        st.write(df.describe())
-    
-    # Data Visualizations
-    if st.checkbox('Visualize data'):
-        st.subheader('Data Visualization')
-        # Plot options
-        plot_type = st.selectbox("Choose plot type", ['Histogram', 'Boxplot', 'Correlation Heatmap'])
-        
-        if plot_type == 'Histogram':
-            column_to_plot = st.selectbox("Choose column to plot", df.columns)
-            bins = st.slider("Number of bins", min_value=10, max_value=100, value=30)
-            plt.hist(df[column_to_plot], bins=bins)
-            plt.title(f'Histogram of {column_to_plot}')
-            plt.ylabel('Frequency')
-            plt.xlabel(column_to_plot)
-            st.pyplot(plt)
-        
-        elif plot_type == 'Boxplot':
-            column_to_plot = st.selectbox("Choose column for Boxplot", df.columns)
-            sns.boxplot(y=df[column_to_plot])
-            plt.title(f'Boxplot of {column_to_plot}')
-            st.pyplot(plt)
-        
-        elif plot_type == 'Correlation Heatmap':
-            corr = df.corr()
-            sns.heatmap(corr, annot=True, cmap='coolwarm', fmt=".2f")
-            plt.title('Correlation Heatmap')
-            st.pyplot(plt)
+st.title('Simple ASCII Art Animation')
 
-# Note: Make sure to adjust plt.figure() sizes (not shown here) as needed for better layout in the app.
+# Dropdown for ASCII art selection
+selected_art = st.selectbox('Choose an ASCII character', options=list(ascii_options.keys()))
+
+# Start animation button
+if st.button('Start Animation'):
+    animate_ascii_art(ascii_options[selected_art])
