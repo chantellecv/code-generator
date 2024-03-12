@@ -1,25 +1,40 @@
 import streamlit as st
 import random
 
-# Set the title of the app
+# Dictionary of language exercises with questions and answers
+exercises = {
+    "Translate the word 'hello' in the new language": "Bonjour",
+    "Translate the word 'goodbye' in the new language": "Au revoir",
+    "Translate the word 'thank you' in the new language": "Merci",
+    "Translate the word 'yes' in the new language": "Oui",
+    "Translate the word 'no' in the new language": "Non",
+}
+
+# Language games
+def language_quiz(exercises):
+    score = 0
+    for question, answer in exercises.items():
+        user_answer = st.text_input(question)
+        if user_answer.lower() == answer.lower():
+            st.write("Correct!")
+            score += 1
+        else:
+            st.write(f"Incorrect. The correct answer is: {answer}")
+    st.write(f"Your final score is: {score}/{len(exercises)}")
+
+# Main section of the app
 st.title("Language Learning App")
 
-# Define a list of languages for the user to choose from
-languages = ["Spanish", "French", "German", "Italian"]
+option = st.sidebar.selectbox(
+    "Choose an option:",
+    ["Language Exercises", "Language Quiz"]
+)
 
-# Create a selectbox for the user to choose the language
-selected_language = st.selectbox("Select a language to learn", languages)
+if option == "Language Exercises":
+    st.subheader("Language Exercises")
+    exercise = random.choice(list(exercises.keys()))
+    st.write(exercise)
 
-# Language-specific interactive exercises, quizzes, and games
-if selected_language == "Spanish":
-    st.write("Hola! Welcome to the Spanish Language Learning Section")
-    # Add interactive exercises, quizzes, and games for learning Spanish here
-elif selected_language == "French":
-    st.write("Bonjour! Welcome to the French Language Learning Section")
-    # Add interactive exercises, quizzes, and games for learning French here
-elif selected_language == "German":
-    st.write("Hallo! Welcome to the German Language Learning Section")
-    # Add interactive exercises, quizzes, and games for learning German here
-elif selected_language == "Italian":
-    st.write("Ciao! Welcome to the Italian Language Learning Section")
-    # Add interactive exercises, quizzes, and games for learning Italian here
+elif option == "Language Quiz":
+    st.subheader("Language Quiz")
+    language_quiz(exercises)
