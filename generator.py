@@ -1,61 +1,44 @@
 import streamlit as st
+import random
 
-# Function to display the home page
-def home_page():
-    st.header("Welcome to the French Learning App!")
-    st.write("Select an activity from the left sidebar to start learning.")
-
-# Function for a basic vocabulary exercise
-def vocabulary_practice():
-    st.header("Vocabulary Practice")
-    st.write("Translate the following English words into French.")
-
-    vocab_questions = {
-        "apple": "pomme",
-        "book": "livre",
-        "car": "voiture"
-        # Add more vocab here
+# Function to generate the story
+def generate_story(theme, character):
+    # Basic story elements
+    beginnings = {
+        'adventure': f"One day, {character} found a mysterious map leading to an unknown land.",
+        'horror': f"It was a dark, stormy night when {character} heard a strange noise coming from the basement.",
+        'fantasy': f"In the realm of Eldoria, {character} stumbled upon an ancient artifact of immense power.",
     }
-    score = 0
+    
+    middles = {
+        'adventure': f"Braving through treacherous paths, {character} encountered various challenges.",
+        'horror': f"Every corner of the house seemed to hide dark secrets, terrifying {character} more with each step.",
+        'fantasy': f"With the artifact, {character} set out on a quest to defeat the dark sorcerer threatening the land.",
+    }
+    
+    ends = {
+        'adventure': f"Finally, after many hardships, {character} discovered the treasure, bringing prosperity to their village.",
+        'horror': f"In the end, {character} uncovered the truth behind the haunting, bringing peace to the restless spirits.",
+        'fantasy': f"The battle was fierce, but {character} emerged victorious, hailed as a hero throughout Eldoria.",
+    }
 
-    for word, correct_answer in vocab_questions.items():
-        user_answer = st.text_input(f"What is the French word for '{word}'?", "").lower()
-        if user_answer == correct_answer:
-            st.success("Correct!")
-            score += 1
-        elif user_answer != "":
-            st.error(f"Oops! The correct answer is '{correct_answer}'.")
+    # Generating the story by concatenating parts
+    story = f"{beginnings.get(theme, 'Once upon a time,')}\n\n{middles.get(theme, '')}\n\n{ends.get(theme, 'And they lived happily ever after.')}"
+    return story
 
-    st.write(f"Your score: {score}/{len(vocab_questions)}")
+# Streamlit UI
+def main():
+    st.title("Creative Short Story Generator")
+    
+    # User inputs
+    theme = st.selectbox("Select the theme of your story:", ('adventure', 'horror', 'fantasy'), index=0)
+    character = st.text_input("Enter the name of your main character:", "Alex")
 
-# Function for a basic grammar quiz
-def grammar_quiz():
-    st.header("Grammar Quiz")
-    st.write("Choose the correct option.")
+    # Button to generate story
+    if st.button("Generate Story"):
+        story = generate_story(theme, character)
+        st.subheader("Here's your story:")
+        st.write(story)
 
-    quiz_questions = [
-        {"question": "How do you say 'I am' in French?", "options": ["Je suis", "Tu es", "Il est"], "answer": "Je suis"},
-        # Add more quiz questions here
-    ]
-    score = 0
-
-    for quiz in quiz_questions:
-        user_answer = st.radio(quiz["question"], quiz["options"], key=quiz["question"])
-        if user_answer == quiz["answer"]:
-            st.success("That's right!")
-            score += 1
-        else:
-            st.error("Try again!")
-
-    st.write(f"Your score: {score}/{len(quiz_questions)}")
-
-# Sidebar navigation
-st.sidebar.title("Navigation")
-app_mode = st.sidebar.radio("Go to", ["Home", "Vocabulary Practice", "Grammar Quiz"])
-
-if app_mode == "Home":
-    home_page()
-elif app_mode == "Vocabulary Practice":
-    vocabulary_practice()
-elif app_mode == "Grammar Quiz":
-    grammar_quiz()
+if __name__ == "__main__":
+    main()
