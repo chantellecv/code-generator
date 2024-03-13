@@ -1,31 +1,20 @@
-# Importing necessary library
 import streamlit as st
 
-# Function to check if the number is prime
-def is_prime(n):
-    """Check if a number is a prime number."""
-    # Check for edge cases
-    if n <= 1:
-        return False
-    for i in range(2, int(n**0.5) + 1):
-        if n % i == 0:
-            return False
-    return True
+def calculate_difference(num1, num2):
+    """Calculate the difference between two numbers."""
+    return abs(num1 - num2)
 
-# Streamlit app
 def main():
-    # App title
-    st.title('Prime Number Checker')
+    st.title("Difference Calculator")
     
-    # Getting user input
-    number = st.number_input('Enter a number', min_value=0, format="%d")
+    # User inputs for the two numbers
+    num1 = st.number_input("Enter the first integer:", value=0, format="%d")
+    num2 = st.number_input("Enter the second integer:", value=0, format="%d")
     
-    # Displaying result
-    if st.button('Check'):
-        if is_prime(number):
-            st.success(f"{number} is a prime number!")
-        else:
-            st.error(f"{number} is not a prime number.")
-
+    # A button to perform the calculation
+    if st.button("Calculate Difference"):
+        result = calculate_difference(num1, num2)
+        st.success(f"The difference between {num1} and {num2} is {result}.")
+        
 if __name__ == "__main__":
     main()
