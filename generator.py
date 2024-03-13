@@ -1,14 +1,14 @@
 import streamlit as st
 
-# Title of the app
+# Streamlit app title
 st.title('Difference Calculator')
 
-# Getting user input
-num1 = st.number_input('Enter the first integer:', value=0, format='%d')
-num2 = st.number_input('Enter the second integer:', value=0, format='%d')
+# User inputs
+num1 = st.number_input('Enter first integer:', format='%d', step=1)
+num2 = st.number_input('Enter second integer:', format='%d', step=1)
 
-# Calculate the difference
-difference = abs(num1 - num2)
-
-# Display the result
-st.write(f'The difference between {num1} and {num2} is {difference}.')
+# Button to calculate difference
+if st.button('Calculate Difference'):
+    difference = num1 - num2
+    # Displaying the result
+    st.write(f'The difference between {num1} and {num2} is {difference}.')
