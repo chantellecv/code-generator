@@ -1,17 +1,17 @@
+# Import the Streamlit library
 import streamlit as st
 
-def calculate_difference(num1, num2):
-    """Calculate and return the difference between two numbers."""
-    return abs(num1 - num2)
+# Create a title for your app
+st.title('Sum Calculator')
 
-# Setting up the Streamlit app
-st.title('Integer Difference Calculator')
+# Create input fields to input the integers
+number1 = st.number_input('Enter first integer', value=0, format='%d')
+number2 = st.number_input('Enter second integer', value=0, format='%d')
 
-# Getting user input
-num1 = st.number_input('Enter the first integer:', format='%d', step=1)
-num2 = st.number_input('Enter the second integer:', format='%d', step=1)
-
-# Button to calculate difference
-if st.button('Calculate Difference'):
-    difference = calculate_difference(num1, num2)
-    st.success(f'The difference between {num1} and {num2} is {difference}.')
+# Button to perform the sum
+if st.button('Calculate Sum'):
+    # Calculate the sum
+    sum_result = number1 + number2
+    
+    # Display the result
+    st.write('The sum is:', sum_result)
