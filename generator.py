@@ -1,8 +1,10 @@
+# Importing necessary library
 import streamlit as st
 
 # Function to check if the number is prime
 def is_prime(n):
-    """Return True if n is a prime number and False otherwise."""
+    """Check if a number is a prime number."""
+    # Check for edge cases
     if n <= 1:
         return False
     for i in range(2, int(n**0.5) + 1):
@@ -12,15 +14,15 @@ def is_prime(n):
 
 # Streamlit app
 def main():
-    st.title("Prime Number Checker")
+    # App title
+    st.title('Prime Number Checker')
     
-    # User input
-    number = st.number_input('Enter a number', min_value=1, value=1, step=1)
+    # Getting user input
+    number = st.number_input('Enter a number', min_value=0, format="%d")
     
-    # Button to check the number
-    if st.button('Check if Prime'):
-        result = is_prime(number)
-        if result:
+    # Displaying result
+    if st.button('Check'):
+        if is_prime(number):
             st.success(f"{number} is a prime number!")
         else:
             st.error(f"{number} is not a prime number.")
