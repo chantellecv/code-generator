@@ -1,17 +1,16 @@
-# Import the Streamlit library
 import streamlit as st
 
-# Create a title for your app
+# App title
 st.title('Sum Calculator')
 
-# Create input fields to input the integers
-number1 = st.number_input('Enter first integer', value=0, format='%d')
-number2 = st.number_input('Enter second integer', value=0, format='%d')
+# Get user input for the two numbers
+num1 = st.number_input('Enter first number', format='%d')
+num2 = st.number_input('Enter second number', format='%d')
 
-# Button to perform the sum
+# Button to perform the calculation
 if st.button('Calculate Sum'):
-    # Calculate the sum
-    sum_result = number1 + number2
+    # Perform the sum
+    result = num1 + num2
     
     # Display the result
-    st.write('The sum is:', sum_result)
+    st.write('The sum of', num1, 'and', num2, 'is:', result)
