@@ -1,27 +1,31 @@
 import streamlit as st
 
-# Function to check if the number is prime
-def is_prime(n):
-    """Return True if n is a prime number, else False."""
-    if n <= 1:
+# Function to check if a number is prime
+def is_prime(num):
+    if num < 2:
         return False
-    for i in range(2, int(n**0.5) + 1):
-        if n % i == 0:
+    for i in range(2, int(num**0.5) + 1):
+        if num % i == 0:
             return False
     return True
 
-# Creating a simple Streamlit app
-def main():
-    st.title('Prime Number Checker')
+# Streamlit app starts here
+st.title('Prime Number Checker')
 
-    number = st.number_input("Enter a number", min_value=1, step=1)
+# User input
+number = st.number_input("Enter a number", min_value=1, step=1)
 
-    if st.button('Check if prime'):
-        result = is_prime(number)
-        if result:
-            st.success(f"{number} is a prime number!")
-        else:
-            st.error(f"{number} is not a prime number.")
+if number:
+    # Call the function with the user input
+    result = is_prime(number)
+    
+    # Display the result
+    if result:
+        st.success(f"{number} is a prime number.")
+    else:
+        st.error(f"{number} is not a prime number.")
 
-if __name__ == "__main__":
-    main()
+# Run your app
+# To run this Streamlit app, save the code in a file (e.g., prime_checker.py)
+# and run it using Streamlit. Use the following command in your terminal or command prompt:
+# streamlit run prime_checker.py
