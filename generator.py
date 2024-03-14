@@ -1,24 +1,27 @@
+# Importing Streamlit
 import streamlit as st
 
-def calculate_sum(a, b, c):
-    return a + b + c
+# Function to check if a word is a palindrome
+def is_palindrome(word):
+    # Removing spaces and converting to lowercase for accurate comparison
+    cleaned_word = word.replace(" ", "").lower()
+    return cleaned_word == cleaned_word[::-1]
 
-def main():
-    st.title("Sum of Three Integers Calculator")
+# Streamlit application
+def app():
+    # Title of the app
+    st.title("Palindrome Checker")
 
-    # Creating three columns to input the integer values
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        num1 = st.number_input("Enter first number:", format="%d")
-    with col2:
-        num2 = st.number_input("Enter second number:", format="%d")
-    with col3:
-        num3 = st.number_input("Enter third number:", format="%d")
+    # User input
+    word = st.text_input("Enter a word to check if it's a palindrome:")
 
-    # Button to calculate the sum
-    if st.button("Calculate Sum"):
-        result = calculate_sum(num1, num2, num3)
-        st.success(f"The sum of {num1}, {num2}, and {num3} is: {result}")
+    if word:  # If user has entered a word
+        result = is_palindrome(word)  # Check if it is a palindrome
+        if result:
+            st.success(f"✅ '{word}' is a palindrome!")
+        else:
+            st.error(f"❌ '{word}' is not a palindrome.")
 
+# Run the app
 if __name__ == "__main__":
-    main()
+    app()
