@@ -1,22 +1,29 @@
 import streamlit as st
 
-# Title of the app
-st.title('Word "A" Checker')
+# App title
+st.title('Does the word contain "b"?')
 
-# Text input for user to enter the word
-user_input = st.text_input("Enter a word:", "")
+# Text input for the user to enter a word
+word = st.text_input('Enter a word:').lower()
 
-# Function to check if the word contains 'a'
-def check_for_a(word):
-    return 'a' in word.lower()  # lower() is used to make it case-insensitive
-
-# Button to perform the check
-if st.button('Check for "A"'):
-    # If the button is clicked, check if the entered word contains 'a'
-    if check_for_a(user_input):
-        st.success(f'Yes, the word "{user_input}" contains the letter "a".')
+# Function to check if 'b' is in the word
+def check_b(word):
+    if 'b' in word:
+        return True
     else:
-        st.error(f'No, the word "{user_input}" does not contain the letter "a".')
+        return False
 
-# Optional: Instructions or information about the app
-st.write("This app checks if the entered word contains the letter 'a'.")
+# Button to check the word
+if st.button('Check the word'):
+    # Using the function to check the word
+    result = check_b(word)
+    
+    # Displaying the result
+    if result:
+        st.success('Yes, the word contains "b".')
+    else:
+        st.error('No, the word does not contain "b".')
+
+# The Streamlit command to run the app. 
+# This should be executed in your terminal, not in the script.
+# streamlit run app.py
