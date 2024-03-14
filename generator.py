@@ -1,19 +1,21 @@
+# app.py
+
 import streamlit as st
 
-# Title of the app
-st.title('D Letter Detector')
+# App title
+st.title('Does it contain "e"?')
 
-# Text input for the word
-word = st.text_input("Enter a word:", "")
+# Text input from user
+user_input = st.text_input("Enter a word:")
 
-# Function to check for 'd' in the word
-def contains_d(word):
-    return 'd' in word.lower()
+# Function to check if the word contains 'e'
+def contains_e(word):
+    return 'e' in word.lower()
 
-# When a word is entered
-if word:
-    # Check if the word contains 'd'
-    if contains_d(word):
-        st.success("Yes! The word contains the letter 'd'.")
+# Display the result
+if user_input:  # Check if there is user input
+    result = contains_e(user_input)
+    if result:
+        st.success(f'Yes, "{user_input}" contains the letter "e".')
     else:
-        st.error("No, the word does not contain the letter 'd'.")
+        st.error(f'No, "{user_input}" does not contain the letter "e".')
