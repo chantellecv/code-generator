@@ -1,17 +1,13 @@
 import streamlit as st
 
-def main():
-    # App title
-    st.title('Sum Calculator')
+# Title for the app
+st.title('Sum Calculator')
 
-    # Getting user input for the two numbers
-    num1 = st.number_input('Enter first number:', min_value=None, max_value=None, value=0, step=1)
-    num2 = st.number_input('Enter second number:', min_value=None, max_value=None, value=0, step=1)
+# Getting user inputs
+number1 = st.number_input('Enter first integer:', format='%d', key='num1')
+number2 = st.number_input('Enter second integer:', format='%d', key='num2')
 
-    # User action to perform the sum
-    if st.button('Calculate Sum'):
-        result = num1 + num2
-        st.write('The sum of {} and {} is: {}'.format(num1, num2, result))
-
-if __name__ == '__main__':
-    main()
+# Button to calculate sum
+if st.button('Calculate Sum'):
+    sum = number1 + number2
+    st.write('The sum of', number1, 'and', number2, 'is:', sum)
