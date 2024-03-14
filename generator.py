@@ -1,29 +1,22 @@
 import streamlit as st
 
-# Function to check if the word is a palindrome
-def is_palindrome(word):
-    # Remove case sensitivity and spaces from the input
-    word = word.replace(" ", "").lower()
-    # Check if the word is equal to its reverse
-    return word == word[::-1]
+# Title of the app
+st.title('Word "A" Checker')
 
-# Streamlit app interface
-def main():
-    # App title
-    st.title("Palindrome Checker")
+# Text input for user to enter the word
+user_input = st.text_input("Enter a word:", "")
 
-    # User input
-    word = st.text_input("Enter a word to check if it's a palindrome:")
+# Function to check if the word contains 'a'
+def check_for_a(word):
+    return 'a' in word.lower()  # lower() is used to make it case-insensitive
 
-    # Button to check palindrome
-    if st.button('Check'):
-        if word:  # Check if the input is not empty
-            if is_palindrome(word):
-                st.success(f'"{word}" is a palindrome!')
-            else:
-                st.error(f'"{word}" is not a palindrome.')
-        else:
-            st.warning("Please enter a word to check.")
+# Button to perform the check
+if st.button('Check for "A"'):
+    # If the button is clicked, check if the entered word contains 'a'
+    if check_for_a(user_input):
+        st.success(f'Yes, the word "{user_input}" contains the letter "a".')
+    else:
+        st.error(f'No, the word "{user_input}" does not contain the letter "a".')
 
-if __name__ == "__main__":
-    main()
+# Optional: Instructions or information about the app
+st.write("This app checks if the entered word contains the letter 'a'.")
