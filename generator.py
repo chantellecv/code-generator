@@ -1,21 +1,26 @@
-# app.py
-
 import streamlit as st
 
-# App title
-st.title('Does it contain "e"?')
+def check_for_f(word):
+    """Check if the provided word contains the letter 'f'."""
+    return 'f' in word.lower()
 
-# Text input from user
-user_input = st.text_input("Enter a word:")
+def main():
+    # Streamlit app title
+    st.title('Check for "f" in a Word')
+    
+    # User input
+    word = st.text_input('Enter a word:', '').strip()
 
-# Function to check if the word contains 'e'
-def contains_e(word):
-    return 'e' in word.lower()
+    # Button to check the word
+    if st.button('Check Word'):
+        if word:  # Check if the user has entered a word
+            result = check_for_f(word)
+            if result:
+                st.success(f'The word "{word}" contains the letter "f".')
+            else:
+                st.error(f'The word "{word}" does not contain the letter "f".')
+        else:
+            st.warning('Please enter a word to check.')
 
-# Display the result
-if user_input:  # Check if there is user input
-    result = contains_e(user_input)
-    if result:
-        st.success(f'Yes, "{user_input}" contains the letter "e".')
-    else:
-        st.error(f'No, "{user_input}" does not contain the letter "e".')
+if __name__ == '__main__':
+    main()
