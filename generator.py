@@ -1,21 +1,18 @@
 import streamlit as st
 
-def check_letter_j(word):
-    """Check if the word contains the letter 'j'."""
-    return 'j' in word.lower()
+def check_for_k(word):
+    """Function to check if 'k' is in the word."""
+    return 'k' in word.lower()
 
-# Streamlit app UI
-st.title("Check for the letter 'j' in a word")
+# Setting up the Streamlit app
+st.title('Check if a word contains the letter "k"')
 
 # User input
-user_word = st.text_input("Enter a word:")
+user_input = st.text_input("Enter a word to check:")
 
-if user_word:
-    # Check if the submitted word contains the letter 'j'
-    contains_j = check_letter_j(user_word)
-    
-    # Display the result
-    if contains_j:
-        st.write(f"The word '{user_word}' contains the letter 'j'.")
+# Submit button
+if st.button('Check'):
+    if check_for_k(user_input):
+        st.success(f"The word '{user_input}' contains the letter 'k'.")
     else:
-        st.write(f"The word '{user_word}' does not contain the letter 'j'.")
+        st.error(f"The word '{user_input}' does not contain the letter 'k'.")
