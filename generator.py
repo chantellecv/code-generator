@@ -1,21 +1,19 @@
+# First, import the necessary library
 import streamlit as st
 
 # Title for your app
-st.title('Check the letter G in a word')
+st.title('Word "i" Checker App')
 
-# User input
-word = st.text_input('Enter your word')
+# Taking a word input from the user
+user_input = st.text_input('Enter a word:')
 
-# Function to check 'g' or 'G' in the word
-def check_g(word):
-    if 'g' in word.lower():
-        return "Yes, the word contains the letter 'g'."
+# Function to check if the word contains 'i' or 'I'
+def contains_i(word):
+    return 'i' in word.lower()  # This makes the check case-insensitive
+
+# Display result when the user has entered a word
+if user_input:  # Checks if the string is not empty
+    if contains_i(user_input):
+        st.write(f'The word "{user_input}" contains the letter "i".')
     else:
-        return "No, the word does not contain the letter 'g'."
-
-# Only display the button and process the input if a word is entered
-if word:
-    # Button to check the word
-    if st.button('Check for G'):
-        # Display the result
-        st.write(check_g(word))
+        st.write(f'The word "{user_input}" does not contain the letter "i".')
