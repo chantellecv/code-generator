@@ -6,25 +6,17 @@ def api_function(instructions):
         "Content-Type": "application/json",
         "accept": "application/json"
     }
-    api_response = requests.post('https://text-named-er-spacy.icysmoke-f4846de1.switzerlandnorth.azurecontainerapps.io/api/v1/entity-recognition', json={"text": instructions}, headers=headers)
-    
+    api_response = requests.post('https://text-summarization.agreeabledune-08a9cefb.switzerlandnorth.azurecontainerapps.io/api/v1/classify', json={"text": instructions}, headers=headers)
     if api_response.status_code == 200:
-        results_str = " "
-        entity_list = api_response.json()["response"].strip('[]').split(', ')
-        count = 1
-    
-        for entity in entity_list:
-            results_str += str(count) + ". " + entity + "\n"
-            count += 1
-        return results_str
+        return api_response.json()[0]["answer"]
 
-st.title("Entity Recognition App")
-text = st.text_area("Enter your text here:")
-
-if st.button("Identify Entities"):
+# Streamlit app
+st.title("Text Summarizer App")
+text = st.text_area("Enter the text you want to summarize:")
+if st.button("Summarize"):
     if text:
-        entities = api_function(text)
-        st.write("Entities identified in the text:")
-        st.write(entities)
+        summary = api_function(text)
+        st.write("Summary:")
+        st.write(summary)
     else:
-        st.warning("Please enter some text to identify entities.")
+        st.write("Please enter some text to summarize.")
