@@ -15,12 +15,11 @@ def api_function(instructions):
     
         if api_response_entities.status_code == 200:
             results_str = " "
-            entity_list = api_response_entities.json()["response"].strip('[]'').split('', '')
+            entity_list = api_response_entities.json()["response"].strip('[]'').split(',', '')
             count = 1
         
             for entity in entity_list:
-                results_str += str(count) + ". " + entity + "
-"
+                results_str += str(count) + ". " + entity + "\n"
                 count += 1
             return summarised_text, results_str
         else:
