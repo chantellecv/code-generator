@@ -7,6 +7,7 @@ def main():
 
     if number % 10 == 0:
         st.write(f"{number} is divisible by 10")
+        st.write("YES IT WORKS")
     else:
         st.write(f"{number} is not divisible by 10")
 
