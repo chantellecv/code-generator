@@ -1,13 +1,14 @@
 import streamlit as st
 
-# Create a title for the app
-st.title("Number Divisibility Checker")
+# Create a title and description for the app
+st.title("Divisibility Checker")
+st.write("Enter a number to check if it is divisible by 2.")
 
-# Create a text input for the user to enter a number
+# User input for the number
 number = st.number_input("Enter a number:")
 
-# Check if the number is divisible by 3
-if number % 3 == 0:
-    st.write(f"{number} is divisible by 3")
+# Check if the number is divisible by 2
+if number % 2 == 0:
+    st.write(f"{number} is divisible by 2")
 else:
-    st.write(f"{number} is not divisible by 3")
+    st.write(f"{number} is not divisible by 2")
