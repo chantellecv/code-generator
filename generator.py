@@ -20,5 +20,6 @@ if st.button("Summarize"):
         summary = api_function(text_input)
         st.header("Summary:")
         st.write(summary)
+        st.write("SUMMARY DONE")
     else:
         st.warning("Please enter some text to summarize.")
