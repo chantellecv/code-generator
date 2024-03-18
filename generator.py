@@ -1,18 +1,13 @@
 import streamlit as st
 
-def check_for_k(word):
-    """Function to check if the word contains the letter 'k'."""
-    return 'k' in word
+# Create a title for the app
+st.title("Number Divisibility Checker")
 
-# Setting up the Streamlit app
-st.title('Check if a word contains the letter "k"')
+# Create a text input for the user to enter a number
+number = st.number_input("Enter a number:")
 
-# User input
-user_input = st.text_input("Enter a word to check:")
-
-# Submit button
-if st.button('Check'):
-    if check_for_k(user_input):
-        st.success(f"The word '{user_input}' contains the letter 'k'.")
-    else:
-        st.error(f"The word '{user_input}' does not contain the letter 'k'.")
+# Check if the number is divisible by 2
+if number % 2 == 0:
+    st.write(f"{number} is divisible by 2")
+else:
+    st.write(f"{number} is not divisible by 2")
