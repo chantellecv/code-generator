@@ -1,17 +1,21 @@
 import streamlit as st
+import requests
 
 # Title of the app
-st.title('Sum Calculator')
+st.title('Text Summarizer')
 
-# Input fields for user to enter two numbers
-num1 = st.number_input('Enter the first number:')
-num2 = st.number_input('Enter the second number:')
+# Input field for user to enter the text to be summarized
+text = st.text_area('Enter the text to be summarized:', height=200)
 
-# Function to calculate the sum of two numbers
-def calculate_sum(num1, num2):
-    return num1 + num2
+# Button to summarize the text
+if st.button('Summarize Text'):
+    headers = {
+        "Content-Type": "application/json",
+        "accept": "application/json"
+    }
+    api_response = requests.post('https://text-summarization.agreeabledune-08a9cefb.switzerlandnorth.azurecontainerapps.io/api/v1/classify', json={"text": text}, headers=headers)
 
-# Button to calculate the sum
-if st.button('Calculate Sum'):
-    result = calculate_sum(num1, num2)
-    st.success(f'The sum of {num1} and {num2} is: {result}')
+    if api_response.status_code == 200:
+        summary = api_response.json()[0]["answer"]
+        st.success('Summary:')
+        st.write(summary)
