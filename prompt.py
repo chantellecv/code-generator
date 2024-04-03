@@ -87,11 +87,11 @@ def push_to_github(repo_name, file_name, content, token):
                 # File doesn't exist, create a new one
                 repo.create_file(file_name, "Initial commit", content)
                 return True, None
-        except:
+        except:           
             # Repository doesn't exist, create a new one
             repo = user.create_repo(repo_name)
             repo.create_file(file_name, "Initial commit", content)
-        return True, None
+            return True, None
     except Exception as e:
         return False, str(e)
     
@@ -138,7 +138,7 @@ def main():
 
                     modified_code = st.text_area("**Generated code**", value=generated_code, height=400)
                     
-                    st.write(st.session_state.clicked[3])
+                    # st.write(st.session_state.clicked[3])
                     st.button("Build App", on_click=clicked, args=[3])
                     
                     # if st.session_state.clicked[3]:
@@ -166,7 +166,7 @@ def main():
             with st.spinner("Building App..."): 
 
                 st.divider()
-                generated_code = generate_code(prompt)
+                generated_code, st.session_state.chat_log = generate_code(prompt, st.session_state.chat_log)
                 
                 if generated_code != "":
                 
