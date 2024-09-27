@@ -1,22 +1,16 @@
 import streamlit as st
-import math
 
-def is_prime(n):
-    if n <= 1:
-        return False
-    for i in range(2, math.isqrt(n) + 1):
-        if n % i == 0:
-            return False
-    return True
+def is_even(n):
+    return n % 2 == 0
 
-st.title("Prime Number rrr Checkerr")
+st.title("Even Number Checker")
 
 num = st.number_input("Enter a number:", step=1)
 
 if st.button("Check"):
-    if is_prime(num):
-        st.success(f"{num} is a prime number!")
+    if is_even(num):
+        st.success(f"{num} is an even number!")
     else:
-        st.error(f"{num} is not a prime number.")
+        st.error(f"{num} is not an even number.")
 
 st.stop()
