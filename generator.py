@@ -2,17 +2,17 @@ import streamlit as st
 import api_functions
 
 def main():
-    st.title("Number Sum App")
+    st.title("Anagram Checker")
 
-    num1 = st.number_input("Enter the first number:")
-    num2 = st.number_input("Enter the second number:")
+    word1 = st.text_input("Enter the first word:")
+    word2 = st.text_input("Enter the second word:")
 
-    if st.button("Sum"):
-        result = api_functions.sum_numbers(num1, num2)
-        st.write(f"The sum is: {result}")
+    if st.button("Check"):
+        result = api_functions.check_anagrams(word1, word2)
+        st.write(f"{result}")
 
 if __name__ == "__main__":
     main()
 
-def sum_numbers(num1, num2):
-    return num1 + num2
+def check_anagrams(word1, word2):
+    return sorted(word1) == sorted(word2)
