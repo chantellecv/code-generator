@@ -9,7 +9,7 @@ def main():
     if not sentence:
         st.error("Please enter a sentence.")
     else:
-        words = re.split(r'\W+', sentence)
+        words = sentence.split()
         word_count = len(words)
         
         st.header(f"The sentence '{sentence}' contains {word_count} words.")
