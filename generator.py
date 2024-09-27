@@ -20,4 +20,4 @@ if user_input:
     word_count = count_words(user_input)
     st.write(f"The sentence contains {word_count} words.")
 else:
-    st.write("Please enter a sentence!")
+    st.write("Please enter a sentenceeee!")
