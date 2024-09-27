@@ -1,16 +1,18 @@
 import streamlit as st
 
-# Create a title for the app
+# Create a Streamlit app
 st.title("Word Counter")
 
-# Create a text area for the user to enter the sentence
-sentence_input = st.text_input("Please enter your sentence:")
+# Create a text input for the user to enter a sentence
+sentence_input = st.text_input("Enter a sentence:")
 
-# Create a button to trigger the counting process
-if st.button("Count"):
-    # Split the sentence into words and count them
-    words = sentence_input.split()
-    word_count = len(words)
+# Create a button to trigger the word counting
+if st.button("Count words"):
+    # Get the sentence from the input
+    sentence = sentence_input.strip()
     
-    # Display the results
-    st.success(f"The sentence has {word_count} words.")
+    # Count the number of words
+    word_count = len(sentence.split())
+    
+    # Display the result
+    st.write(f"The sentence contains thisss manyyyy {word_count} words.")
