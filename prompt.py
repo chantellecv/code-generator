@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 import os
 import streamlit as st
 from openai import OpenAI
+from groq import Groq
 from github import Github
 
 
@@ -35,18 +36,23 @@ NER = '''def api_function(instructions):
         return results_str '''
 
 def generate_code(prompt, chat_log):
-    client = OpenAI(
-        # ENTER YOUR OPENAI API KEY
-        api_key=os.getenv("OPENAI_KEY"),
+    # client = OpenAI(
+    #     # ENTER YOUR OPENAI API KEY
+    #     api_key=os.getenv("GROQ_KEY"),
+    #     base_url="https://api.groq.com/openai/v1",
+    # )
+    client = Groq(
+        api_key=os.getenv("GROQ_KEY"),
     )
 
     response = client.chat.completions.create(
         # model="gpt-4-turbo-preview",
-        model="gpt-3.5-turbo",
+        # model="gpt-3.5-turbo",
+        model="llama3-8b-8192",
         messages=[
             {"role": "system", "content": "You are an assistant that generates Python code for a Streamlit app based on a user's prompt and an api functions provided. The generated code will be deployed to the Streamlit app where the user will be able to interact with their app."},
-            {"role": "assistant", "content": summary},
-            {"role": "assistant", "content": NER},
+            # {"role": "assistant", "content": summary},
+            # {"role": "assistant", "content": NER},
             {"role": "assistant", "content": chat_log},
             {"role": "user", "content": prompt}   
         ]
@@ -55,19 +61,19 @@ def generate_code(prompt, chat_log):
     # st.write(chat_log)
     # st.write("end of log")
     code = response.choices[0].message.content
-
     python_code = extract_python_code(code)
     return python_code, chat_log
 
 
 def extract_python_code(output_text):
-    start_index = output_text.find("```python") + len("```python")
+    start_index = output_text.find("```") + len("```")
     end_index = output_text.find("```", start_index)
     
     if start_index != -1 and end_index != -1:
         python_code = output_text[start_index:end_index]
     else:
         python_code = "" 
+    # st.text(python_code)
     
     return python_code.strip()
 
@@ -134,7 +140,7 @@ def main():
                     file_name = 'generator.py'
                     
                     # ENTER YOUR GITHUB TOKEN
-                    github_token = os.getenv("GITHUB_KEY")
+                    github_token = os.getenv("GITHUB_API_KEY")
 
                     modified_code = st.text_area("**Generated code**", value=generated_code, height=400)
                     
@@ -167,14 +173,14 @@ def main():
 
                 st.divider()
                 generated_code, st.session_state.chat_log = generate_code(prompt, st.session_state.chat_log)
-                
+                # st.write("generated code is: ", generated_code)
                 if generated_code != "":
                 
                     repo_name = 'code-generator'
                     file_name = 'generator.py'
                     
                     # ENTER YOUR GITHUB TOKEN
-                    github_token = os.getenv("GITHUB_KEY")
+                    github_token = os.getenv("GITHUB_API_KEY")
   
                     success, message = push_to_github(repo_name, file_name, generated_code, github_token)
                     # st.write('pushed')
