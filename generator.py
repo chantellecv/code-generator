@@ -1,26 +1,22 @@
 import streamlit as st
 import math
 
-# Create a Streamlit app
-st.title("Prime Number Checker")
+def is_prime(n):
+    if n <= 1:
+        return False
+    for i in range(2, math.isqrt(n) + 1):
+        if n % i == 0:
+            return False
+    return True
 
-# Create a text box to input a number
-num = st.number_input("Enter a number:")
+st.title("Prime Number Checkerrrrr")
 
-# Create a button to check if the number is prime
+num = st.number_input("Enter a number:", step=1)
+
 if st.button("Check"):
-    if num < 2:
-        result = "Not a prime number"
+    if is_prime(num):
+        st.success(f"{num} is a prime number!")
     else:
-        if math.sqrt(num) % 1 == 0:
-            result = "Not a prime number"
-        else:
-            for i in range(2, int(math.sqrt(num)) + 1):
-                if num % i == 0:
-                    result = "Not a prime number"
-                    break
-            else:
-                result = "Prime number"
+        st.error(f"{num} is not a prime number.")
 
-    # Display the result
-    st.write(f"{num} {result}")
+st.stop()
