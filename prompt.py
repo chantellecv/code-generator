@@ -57,7 +57,7 @@ def generate_code(prompt, chat_log):
             {"role": "user", "content": prompt}   
         ]
     )
-    chat_log += f'\nUser: {prompt}\nAssistant: {response.choices[0].message.content}\n'
+    chat_log = f'\nUser: {prompt}\nAssistant: {response.choices[0].message.content}\n'
     # st.write(chat_log)
     # st.write("end of log")
     code = response.choices[0].message.content
@@ -105,12 +105,15 @@ def push_to_github(repo_name, file_name, content, token):
 
     
 def clicked(button):
-    st.session_state.clicked[button] = True
+    st.session_state.clicked[button] = not st.session_state.clicked[button]
     
 def main():
     
     if 'clicked' not in st.session_state:
         st.session_state.clicked = {1:False, 2:False, 3:False}
+    
+    if 'modified_code' not in st.session_state:
+        st.session_state.modified_code = ""
     
     st.title("App Builder")
 
@@ -119,49 +122,54 @@ def main():
     # Input prompt from user
     prompt = st.text_area("What would you like to build?", placeholder = "I want to build...")
     generated_code = ""
-    
+    # st.session_state.chat_log = ""
     if 'chat_log' not in st.session_state:
         st.session_state.chat_log = ""
     
     if yes:
         
-        st.button("Generate Code for Review", on_click=clicked, args=[1])
+        if st.button("Generate Code for Review", on_click=clicked, args=[1]):
+            st.session_state.clicked[1] = True
         
-        if st.session_state.clicked[1]:
-                    
+        if st.session_state.clicked[1]:    
             with st.spinner("Generating Code..."): 
-
                 st.divider()
                 generated_code, st.session_state.chat_log = generate_code(prompt, st.session_state.chat_log)
-
-                if generated_code != "":
+                # st.session_state.clicked[1] = False
                 
+                if generated_code != "":
                     repo_name = 'code-generator'
                     file_name = 'generator.py'
                     
                     # ENTER YOUR GITHUB TOKEN
                     github_token = os.getenv("GITHUB_API_KEY")
 
-                    modified_code = st.text_area("**Generated code**", value=generated_code, height=400)
+                    st.session_state.modified_code = st.text_area("**Generated code**", value=generated_code, height=400)
+                    st.session_state.modified_code = st.session_state.modified_code
                     
                     # st.write(st.session_state.clicked[3])
-                    st.button("Build App", on_click=clicked, args=[3])
                     
-                    # if st.session_state.clicked[3]:
+                    if st.button("Modify and Build App", on_click=clicked, args=[3]):
+                        # st.session_state.clicked[3] = False
+                        st.session_state.modified_code = st.session_state.modified_code
                         
-                    with st.spinner("Building App..."): 
-            
-                        success, message = push_to_github(repo_name, file_name, modified_code, github_token)
-                        # st.write('pushed')
-                        if success:
-                            st.success("App built successfully!")
-                            st.write('''Click [here](https://code--generator.streamlit.app) to view your app.                     
-                            Alternatively, copy and paste the following link in your browser: https://code--generator.streamlit.app''')
+                        
                     
-                        else:
-                            st.error(f"Failed to build app: {message}")
+                    if st.session_state.clicked[3]:
+                        # st.write("already building")
+                        with st.spinner("Building App..."): 
                 
-        st.session_state.clicked[1] = False
+                            success, message = push_to_github(repo_name, file_name, st.session_state.modified_code, github_token)
+                            # st.write('pushed')
+                            if success:
+                                st.success("App built successfully!")
+                                st.write('''Click [here](https://code--generator.streamlit.app) to view your app.                     
+                                Alternatively, copy and paste the following link in your browser: https://code--generator.streamlit.app''')
+                        
+                            else:
+                                st.error(f"Failed to build app: {message}")
+                
+        # st.session_state.clicked[1] = False
         
     else:
         
