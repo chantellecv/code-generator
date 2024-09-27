@@ -1,4 +1,6 @@
 import streamlit as st
+import nltk
+from nltk.tokenize import word_tokenize
 
 # Create a Streamlit app
 st.title("Word Counter")
@@ -10,9 +12,12 @@ sentence_input = st.text_input("Enter a sentence:")
 if st.button("Count words"):
     # Get the sentence from the input
     sentence = sentence_input.strip()
-    
+
+    # Tokenize the words
+    words = word_tokenize(sentence)
+
     # Count the number of words
-    word_count = len(sentence.split())
-    
+    word_count = len(words)
+
     # Display the result
-    st.write(f"The sentence contains thisss manyyyy {word_count} words.")
+    st.write(f"The sentence contains this this {word_count} words.")
