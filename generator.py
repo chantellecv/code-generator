@@ -6,7 +6,7 @@ num = st.number_input("Enter a number:", step=1)
 
 if st.button("Check"):
     if num % 2 != 0:
-        st.success(f"{num} is an odd number!")
+        st.success(f"YESSSSS{num} is an odd number!")
     else:
         st.error(f"{num} is not an odd number.")
 
