@@ -1,19 +1,14 @@
 import streamlit as st
-import math
 
-st.title("Odd Number Checker")
+def main():
+    st.title('Is it odd or even???llllloooo??')
 
-num = st.number_input("Enter a number:", step=1)
+    num = st.number_input('Enter a number:')
 
-if st.button("Check"):
     if num % 2 != 0:
-        st.success(f"{num} is an odd number!")
+        st.write(f'{num} is an odd number')
     else:
-        st.error(f"{num} is not an odd number.")
+        st.write(f'{num} is an even number')
 
-    # Add an additional check for perfect squares
-    num_sqrt = math.isqrt(num)
-    if num_sqrt * num_sqrt == num:
-        st.warning(f"{num} is a perfect square!")
-
-st.stop()
+if __name__ == '__main__':
+    main()
