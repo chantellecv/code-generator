@@ -5,7 +5,7 @@ def main():
     st.title("Word Counter")
     
     paragraph = st.text_area("Enter a paragraph:")
-
+    
     if not paragraph:
         st.error("Please enter a paragraph.")
     else:
