@@ -1,18 +1,20 @@
+Python
 import streamlit as st
-import re
+from st_code_formatter import format_code
 
-def main():
-    st.title("Word Counter")
-    
-    paragraph = st.text_area("Enter a paragraph:")
-    
-    if not paragraph:
-        st.error("Please enter a paragraph.")
-    else:
-        words = re.split(r'\W+', paragraph)
-        word_count = len([word for word in words if word != ''])
-        
-        st.header(f"The paragraph contains {word_count} words.")
+def word_counter(text):
+    return len(text.split())
 
-if __name__ == "__main__":
-    main()
+st.title("Word Counter")
+
+# Add a text box and a button to the app
+text = st.text_area("Please enter the text to count the number of words:")
+if st.button("Count"):
+    try:
+        result = word_counter(text)
+        st.success(f"The number of words is: {result}")
+    except:
+        st.error("Invalid input")
+
+# Format the code for better readability
+st.code("
