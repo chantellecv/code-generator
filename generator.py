@@ -8,7 +8,7 @@ def count_occurrences(string, text):
     return len(occurrences)
 
 # Create a Streamlit app
-st.title("Text Counter")
+st.title("Text Counter oooo")
 st.header("Enter a string and a text to search: ")
 
 # Create text input fields for user input
