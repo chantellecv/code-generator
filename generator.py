@@ -1,3 +1,4 @@
+python
 import streamlit as st
 import re
 
@@ -5,7 +6,7 @@ def main():
     st.title("Word Counter")
     
     paragraph = st.text_area("Enter a paragraph:")
-
+    
     if not paragraph:
         st.error("Please enter a paragraph.")
     else:
