@@ -1,23 +1,21 @@
 import streamlit as st
-import nltk
-from nltk.tokenize import word_tokenize
+import re
+
+# Define a function to count the number of words in a sentence
+def count_words(sentence):
+    # Use regular expression to split the sentence into words
+    words = re.split(r'\W+', sentence)
+    # Return the count of words
+    return len([word for word in words if word != ''])
 
 # Create a Streamlit app
 st.title("Word Counter")
+st.header("Enter a sentence: ")
 
-# Create a text input for the user to enter a sentence
-sentence_input = st.text_input("Enter a sentence:")
+# Create a text input field for user input
+user_input = st.text_input("")
 
-# Create a button to trigger the word counting
-if st.button("Count words"):
-    # Get the sentence from the input
-    sentence = sentence_input.strip()
-
-    # Tokenize the words
-    words = word_tokenize(sentence)
-
-    # Count the number of words
-    word_count = len(words)
-
-    # Display the result
-    st.write(f"The sentence contains this this {word_count} words.")
+# If the user has input a sentence, count the number of words
+if user_input:
+    word_count = count_words(user_input)
+    st.write(f"The sentence contains {word_count} words.")
