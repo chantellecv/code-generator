@@ -9,8 +9,8 @@ num = st.number_input("Enter a number:", step=1)
 
 if st.button("Check"):
     if is_even(num):
-        st.success(f"{num} is an even number!")
+        st.success(f"YESSSSS {num} is an even number!")
     else:
-        st.error(f"{num} is not an even number.")
+        st.error(f"NOOOO {num} is not an even number.")
 
 st.stop()
