@@ -1,14 +1,8 @@
 import streamlit as st
-import re
-
-# Define a function to count the occurrences of a text in a string
-def count_occurrences(string, text):
-    # Use regular expression to find the occurrences of the text
-    occurrences = re.findall(text.lower(), string.lower())
-    return len(occurrences)
+from collections import Counter
 
 # Create a Streamlit app
-st.title("Text Counter oooo")
+st.title("Text Counter")
 st.header("Enter a string and a text to search: ")
 
 # Create text input fields for user input
@@ -20,7 +14,7 @@ if string_input and text_input:
     try:
         string = string_input.strip()
         text = text_input.strip()
-        occurrences = count_occurrences(string, text)
+        occurrences = Counter(string.lower().split()).get(text.lower(), 0)
         st.write(f"The text '{text}' occurs {occurrences} times in the string.")
     except Exception as e:
         st.error(f"Error: {str(e)}")
