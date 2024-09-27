@@ -9,7 +9,7 @@ def is_prime(n):
             return False
     return True
 
-st.title("Prime Number Checkerrrrr")
+st.title("Prime Number rrr Checkerr")
 
 num = st.number_input("Enter a number:", step=1)
 
