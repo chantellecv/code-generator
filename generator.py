@@ -1,7 +1,7 @@
 import streamlit as st
 
 def main():
-    st.title('Is it odd or even???lllll??')
+    st.title('Is it odd or even???llllooooooooool??')
 
     num = st.number_input('Enter a number:')
 
