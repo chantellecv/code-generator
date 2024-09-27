@@ -1,18 +1,20 @@
 import streamlit as st
-import api_functions
+import math
 
 def main():
-    st.title("Anagram Checker")
+    st.title("Is my number odd or even?")
 
-    word1 = st.text_input("Enter the first word:")
-    word2 = st.text_input("Enter the second word:")
+    user_number = st.number_input("Enter a number:")
 
-    if st.button("Check"):
-        result = api_functions.check_anagrams(word1, word2)
-        st.write(f"{result}")
+    try:
+        user_number = float(user_number)
+    except ValueError:
+        st.error("Invalid input, please enter a number.")
+        return
+
+    result = "ODD" if math.floor(user_number) % 2 != 0 else "EVEN"
+
+    st.header(f"The number {user_number} is {result}.")
 
 if __name__ == "__main__":
     main()
-
-def check_anagrams(word1, word2):
-    return sorted(word1) == sorted(word2)
