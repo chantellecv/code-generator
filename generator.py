@@ -8,6 +8,6 @@ if st.button("Count"):
     try:
         words = paragraph.split()
         result = len(words)
-        st.success(f"There are {result} words in the paragraph.")
+        st.success(f"There are {result} words in theeeee paragraph.")
     except:
         st.error("Invalid input")
