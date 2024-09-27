@@ -10,7 +10,7 @@ def count_words(sentence):
 
 # Create a Streamlit app
 st.title("Word Counter")
-st.header("Enter a sentence: ")
+st.header("Enter a sentenceee: ")
 
 # Create a text input field for user input
 user_input = st.text_input("")
