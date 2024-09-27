@@ -12,7 +12,7 @@ st.title("Text Counter")
 st.header("Enter a string and a text to search: ")
 
 # Create text input fields for user input
-string_input = st.text_input("String", value='')
+string_input = st.text_area("String", value='')
 text_input = st.text_input("Search Text", value='')
 
 # If the user has input a string and a search text, count the occurrences
