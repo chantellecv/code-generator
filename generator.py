@@ -1,23 +1,28 @@
 import streamlit as st
 import re
 
-# Define a function to count the number of words in a sentence
-def count_words(sentence):
-    # Use regular expression to split the sentence into words
-    words = re.split(r'\W+', sentence)
-    # Return the count of words
-    return len([word for word in words if word != ''])
+# Define a function to count the occurrences of a text in a string
+def count_occurrences(string, text):
+    # Use regular expression to find the occurrences of the text
+    occurrences = re.findall(text.lower(), string.lower())
+    return len(occurrences)
 
 # Create a Streamlit app
-st.title("Word Counter")
-st.header("Enter a sentenceee: ")
+st.title("Text Counter")
+st.header("Enter a string and a text to search: ")
 
-# Create a text input field for user input
-user_input = st.text_input("")
+# Create text input fields for user input
+string_input = st.text_input("String", value='')
+text_input = st.text_input("Search Text", value='')
 
-# If the user has input a sentence, count the number of words
-if user_input:
-    word_count = count_words(user_input)
-    st.write(f"The sentence contains {word_count} words.")
+# If the user has input a string and a search text, count the occurrences
+if string_input and text_input:
+    try:
+        string = string_input.strip()
+        text = text_input.strip()
+        occurrences = count_occurrences(string, text)
+        st.write(f"The text '{text}' occurs {occurrences} times in the string.")
+    except Exception as e:
+        st.error(f"Error: {str(e)}")
 else:
-    st.write("Please enter a sentenceeee!")
+    st.write("Please enter a string and a text to search!")
