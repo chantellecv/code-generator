@@ -1,14 +1,12 @@
 import streamlit as st
+from function import sum_numbers  # Assuming you define the sum_numbers function in the function.py file
 
-def main():
-    st.title('Is it odd or even???llllooooooooool??')
+st.header('Sum Calculator')
 
-    num = st.number_input('Enter a number:')
+num1 = st.number_input('Enter the first number:', min_value=0.0)
+num2 = st.number_input('Enter the second number:', min_value=0.0)
 
-    if num % 2 != 0:
-        st.write(f'{num} is an odd number')
-    else:
-        st.write(f'{num} is an even number')
-
-if __name__ == '__main__':
-    main()
+if st.button('Calculate Sum'):
+    result = sum_numbers(num1, num2)
+    st.header('Result')
+    st.write(result)
