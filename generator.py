@@ -8,7 +8,7 @@ def is_palindrome(word):
 
 # Streamlit app
 if __name__ == "__main__":
-    st.title("Palindrome Checker")
+    st.title("Palindrome Checkerrrrr")
 
     word_input = st.text_input("Enter a word to check for palindromity:")
 
