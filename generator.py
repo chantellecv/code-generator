@@ -1,20 +1,37 @@
 import streamlit as st
+from collections import Counter
 
-def calculate_difference(num1, num2):
-    if num1 >= num2:
-        return num1 - num2
-    else:
-        return num2 - num1
+# Function to check if a word is an anagram
+def is_anagram(word, word_list):
+    word = word.lower()
+    word_characters = [char for char in word if char.isalpha()]
+    word_count = Counter(word_characters)
 
-def main():
-    st.title("Difference Calculator")
+    for anagram_word in word_list:
+        anagram_word = anagram_word.lower()
+        anagram_word_characters = [char for char in anagram_word if char.isalpha()]
+        anagram_word_count = Counter(anagram_word_characters)
 
-    num1 = st.number_input("Enter the first number:")
-    num2 = st.number_input("Enter the second number:")
+        if word_count == anagram_word_count:
+            return True
 
-    difference_result = calculate_difference(num1, num2)
+    return False
 
-    st.write("The difference between", num1, "and", num2, "is", difference_result)
+# Predefined list of words
+anagram_words = ["listen", "silent", "enlist", "inlet", "tinsel", "tennis", "taste", "tents", "tenet", "site", "tie", "sit", "sin", "net", "noe", "ten", "sent", "tie", "ten"]
 
+# Streamlit app
 if __name__ == "__main__":
-    main()
+    st.title("Anagram Checker")
+
+    word_input = st.text_input("Enter a word to check for anagrams:")
+
+    if st.button("Check"):
+        if not word_input:
+            st.write("Please enter a word to check.")
+        else:
+            result = is_anagram(word_input, anagram_words)
+            if result:
+                st.write(f"'{word_input}' is an anagram of one of the predefined words.")
+            else:
+                st.write(f"'{word_input}' is not an anagram of any of the predefined words.")
