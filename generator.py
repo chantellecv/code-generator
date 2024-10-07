@@ -14,15 +14,15 @@ def get_substrings(word):
             substrings.append(word[i:j])
     return substrings
 
-# Function to filter even length substrings
-def get_even_substrings(word):
+# Function to filter odd length substrings
+def get_odd_substrings(word):
     substrings = get_substrings(word)
-    even_substrings = [s for s in substrings if len(s) % 2 == 0]
-    return even_substrings
+    odd_substrings = list(set([s for s in substrings if len(s) % 2 != 0]))
+    return odd_substrings
 
 # Streamlit app
 if __name__ == "__main__":
-    st.title("Palindrome and Even Substring Finder")
+    st.title("Palindrome and Odd Substring Finder")
 
     word_input = st.text_input("Enter a word to check:")
 
@@ -32,8 +32,8 @@ if __name__ == "__main__":
         else:
             if is_palindrome(word_input):
                 st.write(f"{word_input} is a palindrome!")
-                st.write("Here are its even substrings:")
-                for substring in get_even_substrings(word_input):
+                st.write("Here are its odd substrings:")
+                for substring in get_odd_substrings(word_input):
                     st.write(substring)
-            else:
-                st.write(f"{word_input} is not a palindrome.")
+            # Syntax error: There is an extra closing bracket on this line
+            else: st.write(f"{word_input} is not a palindrome.")
