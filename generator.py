@@ -1,30 +1,32 @@
 import streamlit as st
-import enchant
+import math
 
-# Function to check if a word is a palindrome
-def is_palindrome(word):
-    word = word.lower()
-    return word == word[::-1]
-
-# Function to check if a word is valid
-def is_valid(word):
-    d = enchant.Dict("en_US")
-    return d.check(word)
+# Function to check if a number is prime
+def is_prime(n):
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
 
 # Streamlit app
 if __name__ == "__main__":
-    st.title("Palindrome Checker")
+    st.title("Prime Number Checker")
 
-    word_input = st.text_input("Enter a word to check for palindrome:")
+    number_input = st.number_input("Enter a number to check for primality:")
 
     if st.button("Check"):
-        if not word_input:
-            st.write("Please enter a word to check.")
+        if number_input < 1:
+            st.write("Please enter a positive integer.")
         else:
-            if is_valid(word_input):
-                if is_palindrome(word_input):
-                    st.write(f"'{word_input}' is a palindrome!")
-                else:
-                    st.write(f"'{word_input}' is not a palindrome.")
+            if is_prime(number_input):
+                st.write(f"{number_input} is a prime number!")
             else:
-                st.write(f"'{word_input}' is not a valid English word.")
+                st.write(f"{number_input} is not a prime number.")
