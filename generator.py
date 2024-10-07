@@ -1,28 +1,23 @@
 import streamlit as st
+from typing import str
 
 def main():
     # Set the title of the app
-    st.title("Difference of Two Numbers")
+    st.title("Christmas Tree Generator")
 
     # Add a header to the app
-    st.header("Enter two numbers to calculate the difference:")
+    st.header("Enter the number of stars to create a Christmas tree:")
 
-    # Create a text input for the first number
-    num1 = st.number_input("Enter the first number:", value=0.0)
+    # Create a slider to input the number of stars
+    num_stars = st.slider("Number of Stars", 1, 100, 25)
 
-    # Create a text input for the second number
-    num2 = st.number_input("Enter the second number:", value=0.0)
+    # Create the Christmas tree
+    tree = ""
+    for i in range(num_stars):
+        tree += "*" * (2 * i + 1) + "\n"
 
-    # Create a button to trigger the calculation
-    if st.button("Calculate"):
-        if num2 > num1:
-            result = num2 - num1
-            st.markdown(f"The difference between {num1} and {num2} is: **{result}**")
-        elif num1 > num2:
-            result = num1 - num2
-            st.markdown(f"The difference between {num2} and {num1} is: **{result}**")
-        else:
-            st.markdown(f"The difference between {num1} and {num2} is: **0**")
+    # Display the Christmas tree
+    st.markdown(tree)
 
 if __name__ == "__main__":
     main()
