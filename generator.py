@@ -1,26 +1,22 @@
-Python
 import streamlit as st
-import os
+import textwrap
 
-def create_christmas_tree(num_of_stars):
-    result = ""
-    for i in range(num_of_stars):
-        if i < num_of_stars // 2:
-            result += "*" * (num_of_stars - i) + "\n"
-        elif i > num_of_stars // 2 - 1:
-            result += "*" * (i - num_of_stars // 2 + 1) + "\n"
-        else:
-            result += "*" + "\n"
-    return result
+def generate_christmas_tree(n_stars):
+    stars = ''
+    dots = ''
+    for i in range(n_stars):
+        stars += '*' * (i + 1) + '\n'
+    for i in range(n_stars - 2, -1, -1):
+        dots += '*' * (i + 1) + '\n'
+    return stars + dots
 
-def display_christmas_tree(num_of_stars):
+def main():
     st.title("Christmas Tree Generator")
-    st.write("Enter the number of stars on your Christmas Tree:")
-    num_of_stars = int(st.text_input("") or 0)
-    if num_of_stars > 0:
-        st.write(create_christmas_tree(num_of_stars))
-    else:
-        st.write("Error: Please enter a positive number.")
+    n_stars = st.slider("Enter the number of stars:", 1, 20, 5)
+    tree = generate_christmas_tree(n_stars)
+    lines = tree.splitlines()
+    st.markdown("".join(map(lambda line: f"{' ' * 10} {line}", lines)))
+    st.markdown("{" + ("{" * 9) + "}")
 
 if __name__ == "__main__":
-    display_christmas_tree(0)
+    main()
