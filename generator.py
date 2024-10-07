@@ -21,8 +21,10 @@ if __name__ == "__main__":
         if not word_input:
             st.write("Please enter a word to check.")
         else:
-            if is_palindrome(word_input):
-                st.write(f"'{word_input}' is a palindrome!")
+            if is_valid(word_input):
+                if is_palindrome(word_input):
+                    st.write(f"'{word_input}' is a palindrome!")
+                else:
+                    st.write(f"'{word_input}' is not a palindrome.")
             else:
-                st.write(f"'{word_input}' is not a palindrome.")
-            st.write(f"The reversed word is: {word_input[::-1]}")
+                st.write(f"'{word_input}' is not a valid English word.")
