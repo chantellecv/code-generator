@@ -1,24 +1,26 @@
+Python
 import streamlit as st
+import os
 
-def main():
-    # Set the title of the app
+def create_christmas_tree(num_of_stars):
+    result = ""
+    for i in range(num_of_stars):
+        if i < num_of_stars // 2:
+            result += "*" * (num_of_stars - i) + "\n"
+        elif i > num_of_stars // 2 - 1:
+            result += "*" * (i - num_of_stars // 2 + 1) + "\n"
+        else:
+            result += "*" + "\n"
+    return result
+
+def display_christmas_tree(num_of_stars):
     st.title("Christmas Tree Generator")
-
-    # Add a header to the app
-    st.header("Enter the number of stars to create a Christmas tree:")
-
-    # Create a slider to input the number of stars
-    num_stars = st.slider("Number of Stars", 1, 100, 25)
-
-    # Create the Christmas tree
-    tree = ""
-    for i in range(num_stars):
-        tree += "*" * (num_stars - i) + "\n"
-    for i in range(num_stars - 2, -1, -1):
-        tree += "*" * i + "\n"
-
-    # Display the Christmas tree
-    st.markdown(tree)
+    st.write("Enter the number of stars on your Christmas Tree:")
+    num_of_stars = int(st.text_input("") or 0)
+    if num_of_stars > 0:
+        st.write(create_christmas_tree(num_of_stars))
+    else:
+        st.write("Error: Please enter a positive number.")
 
 if __name__ == "__main__":
-    main()
+    display_christmas_tree(0)
