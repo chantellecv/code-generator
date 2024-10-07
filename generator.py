@@ -1,12 +1,17 @@
 import streamlit as st
-from function import sum_numbers  # Assuming you define the sum_numbers function in the function.py file
 
-st.header('Sum Calculator')
+def calculate_sum(num1, num2):
+    return num1 + num2
 
-num1 = st.number_input('Enter the first number:', min_value=0.0)
-num2 = st.number_input('Enter the second number:', min_value=0.0)
+def main():
+    st.title("Sum Calculator")
 
-if st.button('Calculate Sum'):
-    result = sum_numbers(num1, num2)
-    st.header('Result')
-    st.write(result)
+    num1 = st.number_input("Enter the first number:")
+    num2 = st.number_input("Enter the second number:")
+
+    sum_result = calculate_sum(num1, num2)
+
+    st.write("The sum of", num1, "and", num2, "is", sum_result)
+
+if __name__ == "__main__":
+    main()
