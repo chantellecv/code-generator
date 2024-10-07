@@ -1,4 +1,3 @@
-python
 import streamlit as st
 from typing import str
 
@@ -13,8 +12,8 @@ def generate_christmas_tree(num_stars: int) -> str:
 def main():
     st.title("Christmas Tree Generator")
     num_stars = st.number_input("Enter the number of stars:", 1, 20)
-    tree = generate_christmas_tree(num_stars)
-    st.write(tree)
+    st.write("---Generated Christmas Tree---")
+    st.write(generate_christmas_tree(num_stars))
 
 if __name__ == "__main__":
     main()
