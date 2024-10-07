@@ -39,11 +39,11 @@ NER = '''def api_function(instructions):
 def generate_code(prompt, chat_log, error_message=None):
     # client = OpenAI(
     #     # ENTER YOUR OPENAI API KEY
-    #     api_key=os.getenv("GROQ_API_KEY"),
+    #     api_key=os.getenv("GROQ_KEY"),
     #     base_url="https://api.groq.com/openai/v1",
     # )
     client = Groq(
-        api_key=os.getenv("GROQ_API_KEY"),
+        api_key=os.getenv("GROQ_KEY"),
     )
     
     user_message = prompt
