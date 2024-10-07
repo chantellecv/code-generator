@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 import os
+import io
 import streamlit as st
 from openai import OpenAI
 from groq import Groq
@@ -35,7 +36,7 @@ NER = '''def api_function(instructions):
             count += 1
         return results_str '''
 
-def generate_code(prompt, chat_log):
+def generate_code(prompt, chat_log, error_message=None):
     # client = OpenAI(
     #     # ENTER YOUR OPENAI API KEY
     #     api_key=os.getenv("GROQ_KEY"),
@@ -44,7 +45,12 @@ def generate_code(prompt, chat_log):
     client = Groq(
         api_key=os.getenv("GROQ_KEY"),
     )
-
+    
+    user_message = prompt
+    if error_message:
+        user_message += f"\nThere was an error in the previous code: {error_message}. Please fix the code."
+    
+    # code_stream = io.StringIO()
     response = client.chat.completions.create(
         # model="gpt-4-turbo-preview",
         # model="gpt-3.5-turbo",
@@ -54,15 +60,29 @@ def generate_code(prompt, chat_log):
             # {"role": "assistant", "content": summary},
             # {"role": "assistant", "content": NER},
             {"role": "assistant", "content": chat_log},
-            {"role": "user", "content": prompt}   
+            {"role": "user", "content": user_message}   
         ]
     )
-    chat_log = f'\nUser: {prompt}\nAssistant: {response.choices[0].message.content}\n'
-    # st.write(chat_log)
-    # st.write("end of log")
+    chat_log = f'\nUser: {user_message}\nAssistant: {response.choices[0].message.content}\n'
     code = response.choices[0].message.content
     python_code = extract_python_code(code)
     return python_code, chat_log
+    
+    
+def run_code_with_feedback(code):
+    """
+    Attempts to run the given code and captures any errors.
+    """
+    env = {}
+
+    try:
+        exec(code, env)
+        # compile(code, '<string>', 'exec')  # Dynamically execute the code
+        return "Code contains no errors.", None # No errors found
+    except Exception as e:
+        # st.write(f"Error detected: {str(e)}")
+        return False, str(e)
+        # return None, str(e)  # Return the error message
 
 
 def extract_python_code(output_text):
@@ -102,8 +122,6 @@ def push_to_github(repo_name, file_name, content, token):
         return False, str(e)
     
 
-
-    
 def clicked(button):
     st.session_state.clicked[button] = not st.session_state.clicked[button]
     
@@ -134,18 +152,27 @@ def main():
         if st.session_state.clicked[1]:    
             with st.spinner("Generating Code..."): 
                 st.divider()
-                generated_code, st.session_state.chat_log = generate_code(prompt, st.session_state.chat_log)
+                generated_code, st.session_state.chat_log = generate_code(prompt, st.session_state.chat_log, None)
                 # st.session_state.clicked[1] = False
                 
+                success_message, error_message = run_code_with_feedback(generated_code)
+                while error_message:
+                    with st.spinner("Regenerating code with error feedback..."):
+                        st.error(f"Error found in the generated code: {error_message}")
+                        st.warning("Fixing code...")
+                        generated_code, st.session_state.chat_log = generate_code(prompt, st.session_state.chat_log, error_message)
+                        success_message, error_message = run_code_with_feedback(generated_code)
+                else:
+                    st.success(success_message)
+                    
                 if generated_code != "":
                     repo_name = 'code-generator'
                     file_name = 'generator.py'
                     
                     # ENTER YOUR GITHUB TOKEN
                     github_token = os.getenv("GITHUB_API_KEY")
-
                     st.session_state.modified_code = st.text_area("**Generated code**", value=generated_code, height=400)
-                    st.session_state.modified_code = st.session_state.modified_code
+                    # st.session_state.modified_code = st.session_state.modified_code
                     
                     # st.write(st.session_state.clicked[3])
                     
@@ -155,19 +182,43 @@ def main():
                         
                         
                     
-                    if st.session_state.clicked[3]:
-                        # st.write("already building")
-                        with st.spinner("Building App..."): 
+                    # if st.session_state.clicked[3]:
+                    #     # st.write("already building")
+                    #     with st.spinner("Building App..."): 
                 
-                            success, message = push_to_github(repo_name, file_name, st.session_state.modified_code, github_token)
-                            # st.write('pushed')
-                            if success:
-                                st.success("App built successfully!")
-                                st.write('''Click [here](https://code--generator.streamlit.app) to view your app.                     
-                                Alternatively, copy and paste the following link in your browser: https://code--generator.streamlit.app''')
+                    #         success, message = push_to_github(repo_name, file_name, st.session_state.modified_code, github_token)
+                    #         # st.write('pushed')
+                    #         if success:
+                    #             st.success("App built successfully!")
+                    #             st.write('''Click [here](https://code--generator.streamlit.app) to view your app.                     
+                    #             Alternatively, copy and paste the following link in your browser: https://code--generator.streamlit.app''')
                         
-                            else:
-                                st.error(f"Failed to build app: {message}")
+                    #         else:
+                    #             st.error(f"Failed to build app: {message}")
+                    
+                    if st.session_state.clicked[3]:
+                        # Run the generated code and check for errors
+                        success, error_message = run_code_with_feedback(st.session_state.modified_code)
+                        
+                        if not success:
+                            # Include the error message in the prompt for the AI to fix the code
+                            with st.spinner("Regenerating code with error feedback..."):
+                                st.divider()
+                                st.session_state.modified_code, st.session_state.chat_log = generate_code(
+                                    prompt, st.session_state.chat_log, error_message
+                                )
+                                
+                                st.text_area("**Regenerated code**", value=st.session_state.modified_code, height=400)
+
+                        else:
+                            with st.spinner("Building App..."):
+                                success, message = push_to_github(repo_name, file_name, st.session_state.modified_code, github_token)
+                                if success:
+                                    st.success("App built successfully!")
+                                    st.write('''Click [here](https://code--generator.streamlit.app) to view your app.
+                                    Alternatively, copy and paste the following link in your browser: https://code--generator.streamlit.app''')
+                                else:
+                                    st.error(f"Failed to build app: {message}")
                 
         # st.session_state.clicked[1] = False
         
@@ -180,7 +231,7 @@ def main():
             with st.spinner("Building App..."): 
 
                 st.divider()
-                generated_code, st.session_state.chat_log = generate_code(prompt, st.session_state.chat_log)
+                generated_code, st.session_state.chat_log = generate_code(prompt, st.session_state.chat_log, None)
                 # st.write("generated code is: ", generated_code)
                 if generated_code != "":
                 
