@@ -1,19 +1,16 @@
 import streamlit as st
-from typing import str
 
-def generate_christmas_tree(num_stars: int) -> str:
-    tree = ""
-    for i in range(num_stars):
-        tree += "*" * (i + 1) + "\n"
-    tree += "|" + " " * (num_stars - 1) + "|\n"
-    tree += "|_______|\n"
-    return tree
+# Set the title of the app
+st.title("Number Sum Calculator")
 
-def main():
-    st.title("Christmas Tree Generator")
-    num_stars = st.number_input("Enter the number of stars:", 1, 20)
-    st.write("---Generated Christmas Tree---")
-    st.write(generate_christmas_tree(num_stars))
+# Ask the user to enter the first number
+num1 = st.number_input("Enter the first number:")
 
-if __name__ == "__main__":
-    main()
+# Ask the user to enter the second number
+num2 = st.number_input("Enter the second number:")
+
+# Calculate the sum
+if st.button("Calculate"):
+    sum = num1 + num2
+    st.header("Result")
+    st.write("The sum of the two numbers is: ", sum)
