@@ -10,7 +10,7 @@ def is_palindrome(word):
 def get_substrings(word):
     substrings = []
     for i in range(len(word)):
-        for j in range(i + 1, len(word) + 1):
+        for j in range(i+1, len(word)+1):
             substrings.append(word[i:j])
     return substrings
 
