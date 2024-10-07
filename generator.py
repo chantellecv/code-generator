@@ -1,5 +1,4 @@
 import streamlit as st
-from typing import str
 
 def main():
     # Set the title of the app
@@ -14,7 +13,9 @@ def main():
     # Create the Christmas tree
     tree = ""
     for i in range(num_stars):
-        tree += "*" * (2 * i + 1) + "\n"
+        tree += "*" * (num_stars - i) + "\n"
+    for i in range(num_stars - 2, -1, -1):
+        tree += "*" * i + "\n"
 
     # Display the Christmas tree
     st.markdown(tree)
