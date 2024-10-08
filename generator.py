@@ -1,14 +1,16 @@
 import streamlit as st
 
-def is_odd(num):
+def determine_odd(num):
     if num % 2 != 0:
-        return "odd"
+        return "Odd"
     else:
-        return "even"
+        return "Even"
 
-st.title("Is the number odd?")
-num = st.number_input("Enter a number:", min_value=0, value=0)
+st.title("Odd or Even?")
+st.header("Enter a number:")
 
-if st.button("Check if number is odd"):
-    result = is_odd(int(num))
-    st.write(f"{num} is a {result} number.")
+num = st.number_input("Number:")
+
+if st.button("Check"):
+    result = determine_odd(int(num))
+    st.write(result)
