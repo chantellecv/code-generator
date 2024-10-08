@@ -1,6 +1,5 @@
 from dotenv import load_dotenv
 import os
-import io
 import streamlit as st
 from openai import OpenAI
 from groq import Groq
@@ -198,28 +197,31 @@ def main():
                     
                     if st.session_state.clicked[3]:
                         # Run the generated code and check for errors
-                        success, error_message = run_code_with_feedback(st.session_state.modified_code)
+                        st.session_state.modified_code = st.session_state.modified_code
+                        # st.session_state.chat_log += f'\nUser: {prompt}. \nAssistant: {st.session_state.modified_code}\n'
+                        # error_message = False
+                        # success, error_message = run_code_with_feedback(st.session_state.modified_code)
                         
-                        while not success:
-                            # Include the error message in the prompt for the AI to fix the code
-                            with st.spinner("Regenerating code with error feedback..."):
-                                st.divider()
-                                st.session_state.modified_code, st.session_state.chat_log = generate_code(
-                                    prompt, st.session_state.chat_log, error_message
-                                )
-                                success, error_message = run_code_with_feedback(st.session_state.modified_code)
+                        # while error_message:
+                        #     # Include the error message in the prompt for the AI to fix the code
+                        #     with st.spinner("Regenerating code with error feedback..."):
+                        #         st.divider()
+                        #         st.session_state.modified_code, st.session_state.chat_log = generate_code(
+                        #             prompt, st.session_state.chat_log, error_message
+                        #         )
+                        #         # success, error_message = run_code_with_feedback(st.session_state.modified_code)
                                 
-                                st.text_area("**Regenerated code**", value=st.session_state.modified_code, height=400)
+                                # st.text_area("**Regenerated code**", value=st.session_state.modified_code, height=400)
 
-                        else:
-                            with st.spinner("Building App..."):
-                                success, message = push_to_github(repo_name, file_name, st.session_state.modified_code, github_token)
-                                if success:
-                                    st.success("App built successfully!")
-                                    st.write('''Click [here](https://code--generator.streamlit.app) to view your app.
-                                    Alternatively, copy and paste the following link in your browser: https://code--generator.streamlit.app''')
-                                else:
-                                    st.error(f"Failed to build app: {message}")
+                        # else:
+                        with st.spinner("Building App..."):
+                            success, message = push_to_github(repo_name, file_name, st.session_state.modified_code, github_token)
+                            if success:
+                                st.success("App built successfully!")
+                                st.write('''Click [here](https://code--generator.streamlit.app) to view your app.
+                                Alternatively, copy and paste the following link in your browser: https://code--generator.streamlit.app''')
+                            else:
+                                st.error(f"Failed to build app: {message}")
                 
         # st.session_state.clicked[1] = False
         
