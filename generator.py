@@ -1,16 +1,30 @@
 import streamlit as st
+import math
 
-# Set the title of the app
-st.title("Number Sum Calculator")
+def is_prime(num):
+    if num <= 1:
+        return False
+    if num == 2:
+        return True
+    if num % 2 == 0:
+        return False
+    sqrt_num = int(math.sqrt(num))
+    for i in range(3, sqrt_num + 1, 2):
+        if num % i == 0:
+            return False
+    return True
 
-# Ask the user to enter the first number
-num1 = st.number_input("Enter the first number:")
+def app():
+    st.title("Prime Number Finderrrrrr")
+    numbers = st.text_input("Enter a list of numbers (separated by ','): ")
+    if numbers:
+        try:
+            numbers = list(map(int, numbers.split(',')))
+            prime_numbers = [num for num in numbers if is_prime(num)]
+            st.write("Prime numbers are: ")
+            st.write(prime_numbers)
+        except ValueError:
+            st.write("Invalid input. Please enter a list of integers separated by commas.")
 
-# Ask the user to enter the second number
-num2 = st.number_input("Enter the second number:")
-
-# Calculate the sum
-if st.button("Calculate"):
-    sum = num1 + num2
-    st.header("Result")
-    st.write("The sum of the two numbers is: ", sum)
+if __name__ == '__main__':
+    app()
