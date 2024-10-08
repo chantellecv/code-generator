@@ -2,7 +2,7 @@ import streamlit as st
 
 st.title("Is it an odd number?")
 
-num = st.number_input("Enter a number:", value=0, min_value=0, key="num_input")
+num = st.number_input("Enter a number:", key="num_input")
 
 if st.button("Check", key="check_button"):
     if num % 2 != 0:
