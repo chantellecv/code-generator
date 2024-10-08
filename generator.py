@@ -6,12 +6,10 @@ st.title("Product Calculator")
 st.subheader("Enter the numbers separated by space")
 
 # Create a text input for the user to enter numbers
-numbers_key = "user_numbers"
-numbers_input = st.text_input(numbers_key)
+numbers = st.text_input("Enter numbers", key="numbers")
 
-# Split the input string into a list of numbers
-if numbers_input:
-    numbers = [int(x) for x in numbers_input.split()]
+if numbers:
+    numbers = [int(x) for x in numbers.split()]
     # Calculate the product of the numbers
     product = math.prod(numbers)
     # Display the result
