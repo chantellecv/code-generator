@@ -1,23 +1,15 @@
 import streamlit as st
 
-# Create a Streamlit app
-st.title("Even Number Checker")
+def is_odd(n):
+    return n % 2 != 0
 
-# Create a text input for the number
-number_input = st.text_input(label="Enter a number", key="number_input")
+st.title("Is the number odd?")
 
-# Check if the input is not empty
-if number_input:
-    # Convert the input string to an integer
-    try:
-        number = int(number_input)
-    except ValueError:
-        st.write("Invalid input. Please enter a whole number.")
+num = st.number_input("Enter a number:", min_value=0, max_value=1000)
 
-    # Check if the number is even
-    if number % 2 == 0:
-        st.write(f"{number} is an even number.")
-    else:
-        st.write(f"{number} is an odd number.")
+if num is None:
+    result = "No input"
 else:
-    st.write("Please enter a number.")
+    result = is_odd(num)
+
+st.write(f"The number {num} {'is' if result else 'is not'} odd.")
