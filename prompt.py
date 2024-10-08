@@ -234,6 +234,17 @@ def main():
                 st.divider()
                 generated_code, st.session_state.chat_log = generate_code(prompt, st.session_state.chat_log, None)
                 # st.write("generated code is: ", generated_code)
+                
+                success_message, error_message = run_code_with_feedback(generated_code)
+                while error_message:
+                    with st.spinner("Regenerating code with error feedback..."):
+                        st.error(f"Error found in the generated code: {error_message}")
+                        st.warning("Fixing code...")
+                        generated_code, st.session_state.chat_log = generate_code(prompt, st.session_state.chat_log, error_message)
+                        success_message, error_message = run_code_with_feedback(generated_code)
+                else:
+                    st.success(success_message)
+                    
                 if generated_code != "":
                 
                     repo_name = 'code-generator'
