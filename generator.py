@@ -1,15 +1,15 @@
 import streamlit as st
 
-def is_odd(n):
-    return n % 2 != 0
+def app():
+    st.title("Is the number even?")
+    number = st.number_input("Enter a number: ")
 
-st.title("Is the number odd?")
+    if number % 2 == 0:
+        result = "Yes, the number is even"
+    else:
+        result = "No, the number is odd"
 
-num = st.number_input("Enter a number:", min_value=0, max_value=1000)
+    st.write(result)
 
-if num is None:
-    result = "No input"
-else:
-    result = is_odd(num)
-
-st.write(f"The number {num} {'is' if result else 'is not'} odd.")
+if __name__ == "__main__":
+    app()
