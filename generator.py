@@ -1,11 +1,19 @@
 import streamlit as st
 
-st.title("Is it an odd number?")
+def check_if_even(num):
+    return num % 2 == 0
 
-num = st.number_input("Enter a number:", key="num_input")
+def main():
+    st.title("Is a number even???")
+    
+    num = st.number_input("Enter a number:")
+    
+    if st.button("Check if even"):
+        is_even = check_if_even(num)
+        if is_even:
+            st.write(f"{num} is an even number.")
+        else:
+            st.write(f"{num} is an odd number.")
 
-if st.button("Check", key="check_button"):
-    if num % 2 != 0:
-        st.header("Yes, the number is odd!")
-    else:
-        st.header("No, the number is even!")
+if __name__ == "__main__":
+    main()
