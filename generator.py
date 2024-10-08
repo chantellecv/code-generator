@@ -1,6 +1,6 @@
 import streamlit as st
 
-def even_numbers(app):
+def even_numbers():
     st.title("Even Number Finder")
     numbers = st.text_input("Enter a list of numbers (separated by ','): ")
     if numbers:
