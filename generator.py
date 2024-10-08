@@ -9,7 +9,7 @@ def app():
     else:
         result = "No, the number is odd"
 
-    st.write(result)
+    st.write(f"{number} is {result}")
 
 if __name__ == "__main__":
     app()
