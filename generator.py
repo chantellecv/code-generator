@@ -1,18 +1,17 @@
 import streamlit as st
-import math
+import string
 
-st.title("Product Calculator")
+def check_palindrome(word):
+    word = word.lower().translate(str.maketrans('', '', string.punctuation)).replace(" ", "")
+    return word == word[::-1]
 
-st.subheader("Enter the numbers separated by space")
+st.title("Palindrome Checker")
+st.header("Enter a word to check if it's a palindrome:")
+word_input = st.text_input("Word:")
+check_button = st.button("Check", key="check")
 
-# Create a text input for the user to enter numbers
-numbers = st.text_input("Enter numbers", key="numbers")
-
-if numbers:
-    numbers = [int(x) for x in numbers.split()]
-    # Calculate the product of the numbers
-    product = math.prod(numbers)
-    # Display the result
-    st.write("The product of the numbers is:", product)
-else:
-    st.write("Please enter numbers separated by space.")
+if check_button:
+    if check_palindrome(word_input):
+        st.write(f"'{word_input}' is a palindrome!")
+    else:
+        st.write(f"'{word_input}' is not a palindrome.")
