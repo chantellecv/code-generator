@@ -1,16 +1,12 @@
 import streamlit as st
-import math
 
-st.title("Product Calculator")
+def is_even(n):
+    return n % 2 == 0
 
-st.subheader("Enter the numbers separated by space")
+st.title("Is the number even?")
 
-# Create a text input for the user to enter numbers
-numbers = st.text_input("Enter numbers", key="numbers")
+num = st.number_input("Enter a number:")
 
-if numbers:
-    numbers = [int(x) for x in numbers.split()]
-    product = math.prod(numbers)
-    st.write("The product of the numbers is:", product)
-else:
-    st.write("Please enter numbers separated by space.")
+if st.button("Check"):
+    result = is_even(num)
+    st.write(f"The number {num} is {'even' if result else 'odd'}")
