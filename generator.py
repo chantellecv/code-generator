@@ -4,9 +4,10 @@ import streamlit as st
 st.title("Even Number Checker")
 
 # Create a text input for the number
-number_input = st.text_input("Enter a number", key="number_input")
+number_input_key = "number_input_key"
+number_input = st.text_input(label="Enter a number", key=number_input_key)
 
-# Check if the input is a valid number
+# Check if the input is not empty
 if number_input:
     # Convert the input string to an integer
     try:
