@@ -200,13 +200,14 @@ def main():
                         # Run the generated code and check for errors
                         success, error_message = run_code_with_feedback(st.session_state.modified_code)
                         
-                        if not success:
+                        while not success:
                             # Include the error message in the prompt for the AI to fix the code
                             with st.spinner("Regenerating code with error feedback..."):
                                 st.divider()
                                 st.session_state.modified_code, st.session_state.chat_log = generate_code(
                                     prompt, st.session_state.chat_log, error_message
                                 )
+                                success, error_message = run_code_with_feedback(st.session_state.modified_code)
                                 
                                 st.text_area("**Regenerated code**", value=st.session_state.modified_code, height=400)
 
