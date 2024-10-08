@@ -1,22 +1,30 @@
 import streamlit as st
-import textwrap
+import math
 
-def generate_christmas_tree(n_stars):
-    stars = ''
-    dots = ''
-    for i in range(n_stars):
-        stars += '*' * (i + 1) + '\n'
-    for i in range(n_stars - 2, -1, -1):
-        dots += '*' * (i + 1) + '\n'
-    return stars + dots
+def is_prime(num):
+    if num <= 1:
+        return False
+    if num == 2:
+        return True
+    if num % 2 == 0:
+        return False
+    sqrt_num = int(math.sqrt(num))
+    for i in range(3, sqrt_num + 1, 2):
+        if num % i == 0:
+            return False
+    return True
 
-def main():
-    st.title("Christmas Tree Generator")
-    n_stars = st.slider("Enter the number of stars:", 1, 20, 5)
-    tree = generate_christmas_tree(n_stars)
-    lines = tree.splitlines()
-    st.markdown("".join(map(lambda line: f"{' ' * 10} {line}", lines)))
-    st.markdown("{" + ("{" * 9) + "}")
+def app():
+    st.title("Prime Number Finderrrrrr")
+    numbers = st.text_input("Enter a list of numbers (separated by ','): ")
+    if numbers:
+        try:
+            numbers = list(map(int, numbers.split(',')))
+            prime_numbers = [num for num in numbers if is_prime(num)]
+            st.write("Prime numbers are: ")
+            st.write(prime_numbers)
+        except ValueError:
+            st.write("Invalid input. Please enter a list of integers separated by commas.")
 
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    app()
