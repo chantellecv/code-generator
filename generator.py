@@ -10,12 +10,10 @@ st.title("Palindrome Checker")
 if 'word_input' not in st.session_state:
     st.session_state.word_input = ''
 
-st.header("Enter a word to check if it's a palindrome:")
 word_input = st.text_input("Word:", key='word_input', value=st.session_state.word_input)
 
-if st.button("Check_palindrome", key="check_palindrome_button"):
-    result = check_palindrome(word_input)
-    if result:
+if st.button("Check Palindrome"):
+    if check_palindrome(word_input):
         st.session_state.word_input = ''
         st.write(f"'{word_input}' is a palindrome!")
     else:
