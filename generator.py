@@ -1,24 +1,20 @@
 python
 import streamlit as st
 
-def is_palindrome(word):
-    return word.lower() == word.lower()[::-1]
+def check_anagrams(word1, word2):
+    if sorted(word1.lower()) == sorted(word2.lower()):
+        return True
+    else:
+        return False
 
-def main():
-    st.title('Palindrome Checker')
+st.title('Anagram Checker')
 
-    word1 = st.text_input('Enter the first word:')
-    word2 = st.text_input('Enter the second word:')
+word1 = st.text_input('Enter the first word:')
+word2 = st.text_input('Enter the second word:')
+result = check_anagrams(word1, word2)
 
-    if st.button('Check Palindrome'):
-        if is_palindrome(word1) and is_palindrome(word2):
-            st.write(f'Both "{word1}" and "{word2}" are palindromes!')
-        elif is_palindrome(word1):
-            st.write(f'Only "{word1}" is a palindrome.')
-        elif is_palindrome(word2):
-            st.write(f'Only "{word2}" is a palindrome.')
-        else:
-            st.write('Neither of the words is a palindrome.')
-
-if __name__ == '__main__':
-    main()
+if st.button('Check Anagrams'):
+    if result:
+        st.write(f'{word1} and {word2} are anagrams!')
+    else:
+        st.write(f'{word1} and {word2} are not anagrams.')
