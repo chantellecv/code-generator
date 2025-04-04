@@ -1,25 +1,24 @@
+python
 import streamlit as st
-import math
 
-def prime_number(n):
-    if n <= 1:
-        return False
-    if n == 2:
-        return True
-    if n % 2 == 0:
-        return False
-    sqrt_n = math.isqrt(n)
-    for i in range(3, sqrt_n + 1, 2):
-        if n % i == 0:
-            return False
-    return True
+def is_palindrome(word):
+    return word.lower() == word.lower()[::-1]
 
-st.title("Prime Number Checker")
+def main():
+    st.title('Palindrome Checker')
 
-n = st.number_input("Enter a number:", value=1, step=1)
+    word1 = st.text_input('Enter the first word:')
+    word2 = st.text_input('Enter the second word:')
 
-if st.button("Check"):
-    if prime_number(n):
-        st.write(f"{n} is a prime number")
-    else:
-        st.write(f"{n} is not a prime number")
+    if st.button('Check Palindrome'):
+        if is_palindrome(word1) and is_palindrome(word2):
+            st.write(f'Both "{word1}" and "{word2}" are palindromes!')
+        elif is_palindrome(word1):
+            st.write(f'Only "{word1}" is a palindrome.')
+        elif is_palindrome(word2):
+            st.write(f'Only "{word2}" is a palindrome.')
+        else:
+            st.write('Neither of the words is a palindrome.')
+
+if __name__ == '__main__':
+    main()
