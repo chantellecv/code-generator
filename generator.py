@@ -1,15 +1,13 @@
 import streamlit as st
 
-def check_anagrams(word1, word2):
-    return sorted(word1) == sorted(word2)
+st.title("Number Difference Calculator")
 
-st.title("Anagram Checker")
+# User input
+num1 = st.number_input("Enter the first number:")
+num2 = st.number_input("Enter the second number:")
 
-word1 = st.text_input("Enter the first word:")
-word2 = st.text_input("Enter the second word:")
+# Calculate the difference
+difference = num1 - num2
 
-if st.button("Check Anagrams"):
-    if check_anagrams(word1, word2):
-        st.write(f"{word1} and {word2} are anagrams!")
-    else:
-        st.write(f"{word1} and {word2} are not anagrams.")
+# Display the difference
+st.write(f"The difference between the two numbers is: {difference}")
