@@ -1,10 +1,10 @@
 import streamlit as st
 
-st.title("Number Multiplier App")
+st.title("Number Addition App")
 
-number1 = st.number_input("Enter the first number:")
-number2 = st.number_input("Enter the second number:")
+num1 = st.number_input("Enter the first number:")
+num2 = st.number_input("Enter the second number:")
 
-result = number1 * number2
+result = num1 + num2
 
-st.write(f"The result of multiplying {number1} and {number2} is: {result}")
+st.write("The sum of the two numbers is:", result)
