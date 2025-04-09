@@ -1,10 +1,14 @@
 import streamlit as st
 
-st.title("Sum Calculator")
+def factorial(n):
+    if n == 0:
+        return 1
+    else:
+        return n * factorial(n-1)
 
-num1 = st.number_input("Enter first number:")
-num2 = st.number_input("Enter second number:")
+st.title('Factorial Calculator')
 
-result = num1 + num2
-
-st.write(f"The sum of {num1} and {num2} is: {result}")
+number = st.number_input('Enter a number:', min_value=0, step=1)
+if st.button('Calculate Factorial'):
+    result = factorial(int(number))
+    st.write(f'The factorial of {number} is {result}')
