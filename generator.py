@@ -1,11 +1,11 @@
 import streamlit as st
 
-st.title('Calculator App')
+st.title('Simple Calculator')
 
 num1 = st.number_input('Enter the first number:')
 num2 = st.number_input('Enter the second number:')
 
-operation = st.selectbox('Select operation', ['Addition', 'Subtraction', 'Multiplication', 'Division'])
+operation = st.selectbox('Select an operation', ['Addition', 'Subtraction', 'Multiplication', 'Division'])
 
 result = 0
 
@@ -19,6 +19,6 @@ elif operation == 'Division':
     if num2 != 0:
         result = num1 / num2
     else:
-        result = "Division by zero is undefined"
+        st.warning("Division by zero is not allowed. Please enter a non-zero value for the second number.")
 
-st.write('Result:', result)
+st.write(f'Result: {result}')
