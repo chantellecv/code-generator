@@ -1,33 +1,32 @@
 import streamlit as st
-import pandas as pd
 
-# Load ticket data from backend data storage
-ticket_data = pd.read_csv('ticket_data.csv')
+# Authentication
+username = st.text_input("Username")
+password = st.text_input("Password", type="password")
+if st.button("Login"):
+    # Add authentication logic here
+    st.success("Login successful!")
 
-# Display total number of tickets
-total_tickets = ticket_data.shape[0]
-st.write(f'Total Number of Tickets: {total_tickets}')
+# Update ticket status
+selected_ticket = st.selectbox("Select a ticket to update status", ["Ticket 1", "Ticket 2", "Ticket 3"])
+new_status = st.selectbox("Select new status", ["Active", "Resolved", "Pending"])
+if st.button("Update Status"):
+    # Add ticket status update logic here
+    st.success(f"Ticket status updated for {selected_ticket} to {new_status}")
 
-# Display tickets by category
-ticket_category = st.selectbox('Select Category', ticket_data['Category'].unique())
-category_tickets = ticket_data[ticket_data['Category'] == ticket_category]
-st.write(f'Tickets in Category "{ticket_category}": {category_tickets.shape[0]}')
+# Add new ticket
+new_ticket = st.text_input("Enter new ticket details")
+assigned_user = st.text_input("Assign to user")
+if st.button("Add Ticket"):
+    # Add new ticket logic here
+    st.success(f"New ticket added: {new_ticket}. Assigned to {assigned_user}")
 
-# Display ticket status
-ticket_status = st.selectbox('Select Status', ['Open', 'Closed', 'Pending'])
-status_tickets = ticket_data[ticket_data['Status'] == ticket_status]
-st.write(f'Tickets with Status "{ticket_status}": {status_tickets.shape[0]}')
+# Display tickets
+st.subheader("Tickets Overview")
+active_tickets = 10
+resolved_tickets = 5
+pending_tickets = 3
 
-# Backend to handle data storage and real-time updates
-# This code will be deployed to the backend server provided by Streamlit
-
-# Define a function to update the ticket data
-@st.cache
-def update_ticket_data():
-    global ticket_data
-    ticket_data = pd.read_csv('updated_ticket_data.csv')
-
-# Real-time update button
-if st.button('Update Ticket Data'):
-    update_ticket_data()
-    st.write('Ticket data updated successfully')
+st.write(f"Active Tickets: {active_tickets}")
+st.write(f"Resolved Tickets: {resolved_tickets}")
+st.write(f"Pending Tickets: {pending_tickets}")
