@@ -1,10 +1,22 @@
+```python
 import streamlit as st
 
-st.title("Number Subtraction App")
+st.title("Simple Game App")
 
-num1 = st.number_input("Enter the first number:")
-num2 = st.number_input("Enter the second number:")
+option = st.selectbox(
+    'Select a number:',
+    ('1', '2', '3')
+)
 
-result = num1 - num2
+st.write('You selected:', option)
 
-st.write(f"The result of {num1} - {num2} is: {result}")
+if option == '1':
+    st.image("https://via.placeholder.com/150")
+    st.write("Congratulations! You won!")
+elif option == '2':
+    st.image("https://via.placeholder.com/150")
+    st.write("Sorry, you lost!")
+elif option == '3':
+    st.image("https://via.placeholder.com/150")
+    st.write("Try again!")
+```
